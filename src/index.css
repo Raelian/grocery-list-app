@@ -1,0 +1,20 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-width: 320px;
+  min-height: 100dvh;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}/*# sourceMappingURL=index.css.map */

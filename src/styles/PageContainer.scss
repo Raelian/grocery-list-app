@@ -1,0 +1,9 @@
+@mixin page-container {
+    background-color: lightgrey;
+    padding: 10px;
+    width: 100%;
+    min-width: 300px;
+    max-width: 480px;
+    min-height: 100dvh;
+    margin: 0 auto;
+}

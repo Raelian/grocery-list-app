@@ -1,0 +1,13 @@
+@mixin menu-btn($color, $bg-color) {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    border-radius: 6px;
+    color: $color;
+    background-color: $bg-color;
+    box-shadow: 1px 1px 2px black;
+    text-shadow: 1px 1px 2px black;
+    flex-shrink: 0;
+}
