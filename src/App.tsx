@@ -1,13 +1,69 @@
+import {useState, useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {GroceryList, GroceryItem} from './types/grocery';
+import {loadLists, saveLists} from './utils/storage';
 import ListsPage from './components/listsPage/ListsPage';
 import ItemsPage from './components/itemsPage/ItemsPage';
 
 function App() {
+  const [lists, setLists] = useState<GroceryList[]>([
+        {id: '1', name: 'Grocery 1', completed: false, items: [] },
+        {id: '2', name: 'Grocery 2', completed: false, items: [] },
+        {id: '3', name: 'Grocery 3', completed: false, items: [
+          {id: "10", name: "apple", quantity: 3, checked: false},
+          {id: "20", name: "banana", quantity: 1, checked: false},
+          {id: "30", name: "cherry", quantity: 9, checked: true},
+        ] },
+  ]);
+
+  useEffect(() => {
+    const fetchLists = async () => {
+      const loadedLists = await loadLists();
+      if(loadedLists.length > 0) {
+        setLists(loadedLists);
+      }
+    };
+
+    fetchLists();
+  }, []); //empty dependency array means this runs once when the component is first rendered
+
+  //delete list by id
+  const deleteList = async (id: string) => {
+    const updatedLists = lists.filter(list => list.id !== id); //remove list with that id
+    setLists(updatedLists); //update the state
+    await saveLists(updatedLists);
+  }
+
+  //add new list
+  const addNewList = async (input: string | GroceryList) => {
+      const newList: GroceryList = 
+        typeof input === "string"
+          ? {
+              id: Date.now().toString(),
+              name: input,
+              completed: false,
+              items: [],
+            }
+          : input;
+
+      const updatedLists = [...lists, newList];
+      setLists(updatedLists); //update the state with the new list
+      await saveLists(updatedLists); //save the new list to localforage
+  }
+
+  //update list
+  const updateMainLists = async (newList: GroceryList) => {
+    const updatedLists = lists.map((list) => list.id === newList.id ? newList : list);
+
+    setLists(updatedLists);
+    await saveLists(updatedLists);
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<ListsPage />} />
-        <Route path='/lists/:id' element={<ItemsPage />} />
+        <Route path='/' element={<ListsPage lists={lists} deleteList={deleteList} addNewList={addNewList}/>} />
+        <Route path='/lists/:id' element={<ItemsPage updateMainLists={updateMainLists}/>} />
       </Routes>
     </BrowserRouter>
   )

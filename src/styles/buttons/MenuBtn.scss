@@ -7,7 +7,7 @@
     border-radius: 6px;
     color: $color;
     background-color: $bg-color;
-    box-shadow: 1px 1px 2px black;
-    text-shadow: 1px 1px 2px black;
+    box-shadow: 1px 1px 2px var(--color-element-2);
+    text-shadow: 1px 1px 2px var(--color-element-2); 
     flex-shrink: 0;
 }

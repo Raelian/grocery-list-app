@@ -1,0 +1,229 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--color-bg);
+  padding: 10px;
+  width: 100%;
+  min-width: 300px;
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+}
+.pageContainer .itemsPageHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+.pageContainer .itemsPageHeader .itemsPageBackBtn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-back);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pageContainer .itemsPageHeader .itemsPageBackBtn .itemsPagebackIcon {
+  width: 1rem;
+  height: 1rem;
+}
+.pageContainer .itemsPageHeader h1 {
+  flex-grow: 1;
+  text-align: center;
+  min-width: 0;
+}
+.pageContainer .itemsPageMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+.pageContainer .itemsPageMain ul {
+  border: 1px solid var(--color-element-2);
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.pageContainer .itemsPageMain ul :first-child {
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.pageContainer .itemsPageMain ul :last-child {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.pageContainer .itemsPageMain ul li {
+  height: 3rem;
+  padding: 4px;
+  background-color: var(--color-element-1);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.pageContainer .itemsPageMain ul li .itemCompletedToggle {
+  display: hidden;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-element-1);
+  flex-shrink: 0;
+}
+.pageContainer .itemsPageMain ul li .itemCompletedToggle .checkIcon {
+  width: 100%;
+  height: 100%;
+}
+.pageContainer .itemsPageMain ul li .activeToggle {
+  display: flex;
+  color: var(--color-confirm);
+}
+.pageContainer .itemsPageMain ul li .activeToggle .checkIcon {
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
+.pageContainer .itemsPageMain ul li .itemBtn {
+  height: 100%;
+  background-color: inherit;
+  border: none;
+  flex-grow: 1;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  text-shadow: 2px 2px 4px var(--color-bg);
+}
+.pageContainer .itemsPageMain ul li .itemQuantity {
+  height: 100%;
+  background-color: inherit;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  text-shadow: 2px 2px 4px var(--color-bg);
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pageContainer .itemsPageMain ul li .addOneItemBtn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-add);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.pageContainer .itemsPageMain ul li .substractOneItemBtn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-substract);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.pageContainer .itemsPageMain ul li .deleteItemBtn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-cancel);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.pageContainer .itemsPageMain .addNewItemContainer {
+  height: 3rem;
+  padding: 4px;
+  background-color: inherit;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  width: 100%;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer input {
+  height: 100%;
+  border-radius: 8px;
+  padding: 4px 6px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid var(--color-element-2);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  flex-grow: 1;
+  min-width: 0;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .confirmNewItem {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-confirm);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .cancelNewItemProcess {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-cancel);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemBtn {
+  height: 100%;
+  width: 100%;
+  justify-self: center;
+  align-self: center;
+  font-size: 2.2rem;
+  background-color: var(--color-confirm);
+  color: var(--color-element-1);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+}/*# sourceMappingURL=Items.Page.module.css.map */

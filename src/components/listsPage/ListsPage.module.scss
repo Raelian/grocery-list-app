@@ -1,42 +1,42 @@
-@use '../../styles/PageContainer' as *;
-@use '../../styles/MenuBtn.scss' as *;
+@use '../../styles/containers/PageContainer.scss' as *;
+@use '../../styles/buttons/MenuBtn.scss' as *;
 
-.page-container {
+.pageContainer {
     @include page-container;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    gap: 1rem;
 
-    header {
+    .listPageHeader {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        position: relative;
         width: 100%;
 
         h1 {
             font-weight: bold;
-            width: 4.2rem;
-            margin-left: calc(50% - 2.1rem);
+            flex-grow: 1;
+            min-width: 0;
+            text-align: center;
         }
 
-        button {
+        .languageToggleBtn {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
             width: 40px;
             height: 20px;
             border-radius: 16px;
-            border: 1px solid black;
+            border: 1px solid var(--color-element-2);
             margin-left: auto;
-            position: relative;
 
             &::before {
                 content: "";
                 width: 20px;
                 height: 20px;
-                background-color: white;
+                background-color: var(--color-element-1);
                 border-radius: inherit;
-                border: 1px solid black;
+                border: 1px solid var(--color-element-2);
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -44,7 +44,7 @@
         }
     }
 
-    main {
+    .listPageMain {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -52,10 +52,10 @@
         width: 100%;
 
         ul {
-            border: 1px solid black;
+            border: 1px solid var(--color-element-2);
             border-radius: 4px;
-            box-shadow: 1px 1px 2px black;
-            background-color: lightgray;
+            box-shadow: 1px 1px 2px var(--color-element-2);
+            background-color: var(--color-bg);
             display: flex;
             flex-direction: column;
             gap: 1px;
@@ -73,7 +73,7 @@
             li {
                 height: 3rem;
                 padding: 4px;
-                background-color: white;
+                background-color: var(--color-element-1);
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
@@ -81,55 +81,55 @@
                 gap: .5rem;
     
                 //list completed toggle btn
-                .list-completed-toggle {
+                .listCompletedToggle {
                     display: hidden;
                     justify-content: center;
                     align-items: center;
                     width: 2rem;
                     height: 2rem;
-                    color: white;
+                    color: var(--color-element-1);
                     flex-shrink: 0;
     
-                    .check-icon {
+                    .checkIcon {
                         width: 100%;
                         height: 100%;
                     }
                 }
     
-                .active-toggle {
+                .activeToggle {
                     display: flex;
-                    color: green;
+                    color: var(--color-confirm);
 
-                    .check-icon {
+                    .checkIcon {
                         filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, .5));
                     }
                 }
     
                 //list name btn
-                .list-btn {
+                .listBtn {
                     height: 100%;
                     background-color: inherit;
                     border: none;
                     flex-grow: 1;
                     font-size: 1.2rem;
                     font-weight: bolder;
-                    text-shadow: 2px 2px 4px lightgray;
+                    text-shadow: 2px 2px 4px var(--color-bg);
                 }
     
                 //delete list btn
-                .delete-list-btn {
-                    @include menu-btn(white, red);
+                .deleteListBtn {
+                    @include menu-btn(var(--color-element-1), var(--color-cancel));
                 }
             }
         }
         
 
-        .add-new-list-container {
+        .addNewListContainer {
             height: 3rem;
             padding: 4px;
             background-color: inherit;
             
-            .add-new-list-input-container {
+            .addNewListInputContainer {
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
@@ -144,40 +144,40 @@
                     padding: 4px 6px;
                     font-size: 1.2rem;
                     font-weight: bold;
-                    border: 1px solid black;
-                    box-shadow: 1px 1px 2px black;
+                    border: 1px solid var(--color-element-2);
+                    box-shadow: 1px 1px 2px var(--color-element-2);
                     flex-grow: 1;
                     min-width: 0;
                 }
 
-                .confirm-new-list {
-                    @include menu-btn(white, green);
+                .confirmNewList {
+                    @include menu-btn(var(--color-element-1), var(--color-confirm));
                     display: flex;
                     justify-content: center;
                     align-items: center;
 
-                    .confirm-icon {
-                        filter: drop-shadow(1px 1px 2px rgb(0, 0, 0));
+                    .confirmIcon {
+                        filter: drop-shadow(1px 1px 2px var(--color-element-2));
                     }
                 }
 
-                .cancel-new-list-process {
-                    @include menu-btn(white, red);
+                .cancelNewListProcess {
+                    @include menu-btn(var(--color-element-1), var(--color-cancel));
                 }
             }
 
-            .add-new-list-btn {
+            .addNewListBtn {
                 height: 100%;
                 width: 100%;
                 justify-self: center;
                 align-self: center;
                 font-size: 2.2rem;
-                background-color: green;
-                color: white;
+                background-color: var(--color-confirm);
+                color: var(--color-element-1);
                 border: none;
                 border-radius: 8px;
-                box-shadow: 1px 1px 2px black;
-                text-shadow: 1px 1px 2px black;
+                box-shadow: 1px 1px 2px var(--color-element-2);
+                text-shadow: 1px 1px 2px var(--color-element-2);
             }
         }
     }
