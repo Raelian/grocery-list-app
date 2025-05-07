@@ -1,8 +1,8 @@
-@mixin menu-btn($color, $bg-color) {
-    width: 2rem;
-    height: 2rem;
+@mixin small-btn($color, $bg-color, $width: 2rem, $height: 2rem, $font-size: 1.2rem) {
+    width: $width;
+    height: $height;
     border: none;
-    font-size: 1.2rem;
+    font-size: $font-size;
     font-weight: bolder;
     border-radius: 6px;
     color: $color;

@@ -5,7 +5,7 @@ const LISTS_KEY = "groceryLists";
 
 //save lists to local storage
 export const saveLists = async (lists: GroceryList[]) => {
-    await localforage.setItem(LISTS_KEY, lists); //saves lists under the key 'groceryLists
+    await localforage.setItem(LISTS_KEY, lists); //saves lists under the key 'groceryLists'
 };
 
 //load lists from local storage

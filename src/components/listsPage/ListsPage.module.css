@@ -40,7 +40,7 @@
 .pageContainer .listPageHeader .languageToggleBtn::before {
   content: "";
   width: 20px;
-  height: 20px;
+  height: inherit;
   background-color: var(--color-element-1);
   border-radius: inherit;
   border: 1px solid var(--color-element-2);
@@ -64,25 +64,32 @@
   flex-direction: column;
   gap: 1px;
 }
-.pageContainer .listPageMain ul :first-child {
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-}
-.pageContainer .listPageMain ul :last-child {
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
 .pageContainer .listPageMain ul li {
-  height: 3rem;
   padding: 4px;
-  background-color: var(--color-element-1);
+  background-color: var(--color-sticky-note);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
 }
-.pageContainer .listPageMain ul li .listCompletedToggle {
+.pageContainer .listPageMain ul li:first-child {
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.pageContainer .listPageMain ul li:last-child {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.pageContainer .listPageMain ul li .listLabelContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+.pageContainer .listPageMain ul li .listLabelContainer .listCompletedToggle {
   display: hidden;
   justify-content: center;
   align-items: center;
@@ -91,19 +98,20 @@
   color: var(--color-element-1);
   flex-shrink: 0;
 }
-.pageContainer .listPageMain ul li .listCompletedToggle .checkIcon {
-  width: 100%;
-  height: 100%;
+.pageContainer .listPageMain ul li .listLabelContainer .listCompletedToggle .checkIcon {
+  display: none;
 }
-.pageContainer .listPageMain ul li .activeToggle {
+.pageContainer .listPageMain ul li .listLabelContainer .activeToggle {
   display: flex;
   color: var(--color-confirm);
 }
-.pageContainer .listPageMain ul li .activeToggle .checkIcon {
+.pageContainer .listPageMain ul li .listLabelContainer .activeToggle .checkIcon {
+  display: block;
+  width: 100%;
+  height: 100%;
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
-.pageContainer .listPageMain ul li .listBtn {
-  height: 100%;
+.pageContainer .listPageMain ul li .listLabelContainer .listNameLabel {
   background-color: inherit;
   border: none;
   flex-grow: 1;
@@ -111,8 +119,65 @@
   font-weight: bolder;
   text-shadow: 2px 2px 4px var(--color-bg);
 }
-.pageContainer .listPageMain ul li .deleteListBtn {
-  width: 2rem;
+.pageContainer .listPageMain ul li .listDropdownMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-element-1);
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid black;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuInfo {
+  width: inherit;
+  font-size: 1.2rem;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-back);
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuInfo p:first-child {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuInfo p:last-child {
+  margin-bottom: 0.5rem;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuInfo span {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.3rem;
+  width: 6rem;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns {
+  width: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns .openListBtn {
+  width: 4.25rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-add);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns .deleteListBtn {
+  width: 4.25rem;
   height: 2rem;
   border: none;
   font-size: 1.2rem;
@@ -124,9 +189,38 @@
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
 }
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns .deletionText {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns .confirmDeletionBtn {
+  width: 4.25rem;
+  height: 2rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-confirm);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns .cancelDeletionBtn {
+  width: 4.25rem;
+  height: 2rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-cancel);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
 .pageContainer .listPageMain .addNewListContainer {
   height: 3rem;
-  padding: 4px;
   background-color: inherit;
 }
 .pageContainer .listPageMain .addNewListContainer .addNewListInputContainer {
@@ -148,6 +242,7 @@
   box-shadow: 1px 1px 2px var(--color-element-2);
   flex-grow: 1;
   min-width: 0;
+  outline: none;
 }
 .pageContainer .listPageMain .addNewListContainer .addNewListInputContainer .confirmNewList {
   width: 2rem;

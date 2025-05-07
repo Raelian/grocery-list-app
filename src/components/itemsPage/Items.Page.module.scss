@@ -1,5 +1,5 @@
 @use '../../styles/containers/PageContainer.scss' as *;
-@use '../../styles/buttons/MenuBtn.scss' as *;
+@use '../../styles/buttons/SmallBtn.scss' as *;
 
 .pageContainer {
     @include page-container();
@@ -13,7 +13,7 @@
         width: 100%;
 
         .itemsPageBackBtn {
-            @include menu-btn(var(--color-element-1), var(--color-back));
+            @include small-btn(var(--color-element-1), var(--color-back));
             position: absolute;
             top: 50%;
             left: 0;
@@ -51,16 +51,6 @@
             flex-direction: column;
             gap: 1px;
 
-            :first-child {
-                border-top-right-radius: 4px;
-                border-top-left-radius: 4px;
-            }
-
-            :last-child {
-                border-bottom-right-radius: 4px;
-                border-bottom-left-radius: 4px;
-            }
-
             li {
                 height: 3rem;
                 padding: 4px;
@@ -71,8 +61,24 @@
                 align-items: center;
                 gap: .5rem;
 
+                &:first-child {
+                    border-top-right-radius: 4px;
+                    border-top-left-radius: 4px;
+                }
+    
+                &:last-child {
+                    border-bottom-right-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                }
+
                 .itemCompletedToggle {
                     display: hidden;
+                    /*
+                    border: 1px solid black;
+                    border-radius: 6px;
+                    padding: 2px;
+                    box-shadow: 1px 1px 2px var(--color-element-2);
+                    */
                     justify-content: center;
                     align-items: center;
                     width: 2rem;
@@ -121,17 +127,17 @@
 
                 //add one item btn
                 .addOneItemBtn {
-                    @include menu-btn(var(--color-element-1), var(--color-add));
+                    @include small-btn(var(--color-element-1), var(--color-add));
                 }
 
                 //substract one item btn
                 .substractOneItemBtn {
-                    @include menu-btn(var(--color-element-1), var(--color-substract));
+                    @include small-btn(var(--color-element-1), var(--color-substract));
                 }
     
                 //delete item btn
                 .deleteItemBtn {
-                    @include menu-btn(var(--color-element-1), var(--color-cancel));
+                    @include small-btn(var(--color-element-1), var(--color-cancel));
                 }
             }
         }
@@ -158,24 +164,26 @@
                     font-weight: bold;
                     border: 1px solid var(--color-element-2);
                     box-shadow: 1px 1px 2px var(--color-element-2);
-                    flex-grow: 1;
                     min-width: 0;
+                    outline: none;
                 }
 
                 .itemNameInput {
-
+                    flex-grow: 1;
                 }
 
                 .itemQuantityInput {
-                    
+                    min-width: 3rem;
+                    max-width: 3.5rem;
+                    text-align: center;         
                 }
 
                 .confirmNewItem {
-                    @include menu-btn(var(--color-element-1), var(--color-confirm));
+                    @include small-btn(var(--color-element-1), var(--color-confirm));
                 }
 
                 .cancelNewItemProcess {
-                    @include menu-btn(var(--color-element-1), var(--color-cancel));
+                    @include small-btn(var(--color-element-1), var(--color-cancel));
                 }
             }
 

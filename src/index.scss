@@ -7,6 +7,7 @@
     --color-add: rgb(90, 110, 140);
     --color-substract: rgb(164, 113, 73);
     --color-back: rgb(95, 106, 114);
+    --color-sticky-note: rgb(240, 230, 170);
 }
 
 *,
@@ -18,6 +19,7 @@
 }
 
 html, body {
+    font-size: 16px;
     min-width: 320px;
     min-height: 100dvh;
 }

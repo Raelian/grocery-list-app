@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { GroceryItem, GroceryList } from "../../types/grocery";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useState, useEffect, useRef} from "react";
+import {GroceryItem, GroceryList, units, Unit} from "../../types/grocery";
+import {useLocation, useNavigate} from "react-router-dom";
 import {FaCheck, FaArrowLeft} from 'react-icons/fa';
 import styles from './Items.Page.module.scss';
 
@@ -16,26 +16,21 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     const [isInputingNewItem, setIfIsInputingNewItem] = useState<boolean>(false);
     const [inputQuantityValue, setInputQuantityValue] = useState<string>("");
     const [inputItemName, setInputItemName] = useState<string>("");
-    const [nameInputPlaceholder, setNameInputPlaceholder] = useState<string>("Add item name...");
+    const [nameInputPlaceholder, setNameInputPlaceholder] = useState<string>("Add item...");
+    const [unitType, setUnitType] = useState<Unit>("");
+    const newItemInputRef = useRef<HTMLInputElement>(null);
 
-    //check if list complete
-    const checkIfListComplete = (list: GroceryList) => {
-        return list.items.length > 0 && !list.items.some(item => !item.checked);// first check if list isn't empty, then check if any items unchecked(false)
-    }
+    //handle input refernce when trying to add new list
+    useEffect(() => {
+        if(isInputingNewItem) {
+            newItemInputRef.current?.focus();
+        }
+    }, [isInputingNewItem]);
 
-    //toggle between complete and incomplete list
-    const toggleListCompletion = async (list: GroceryList) => {
-        const listCompleted = checkIfListComplete(list);
-
-        if(listCompleted) {
-            const completedList = {...list, completed: listCompleted};
-            setUpdatedList(completedList);
-            await updateMainLists(completedList);
-        } else if (!listCompleted) {
-            const incompleteList = {...list, completed: listCompleted};
-            setUpdatedList(incompleteList);
-            await updateMainLists(incompleteList);
-        } else console.log("Error occured, should have been true or false!");
+    //ipdate state and main lists
+    const updateStateAndMainList = async (list: GroceryList) => {
+        setUpdatedList(list);
+        await updateMainLists(list);
     }
 
     //checks or unchecks item on list
@@ -45,19 +40,19 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                 ? {...item, checked: !item.checked}
                 : item
         );
-        const newList = {...updatedList, items: modifiedItems};
-        toggleListCompletion(newList);
+        const newList = {...updatedList, items: modifiedItems, lastModified: new Date().toISOString()};
+        updateStateAndMainList(newList);
     }
 
     //delete item
     const deleteItem = (id: string) => {
         const modifiedItems = updatedList.items.filter((item) => item.id !== id);
-        const newList = {...updatedList, items: modifiedItems};
-        toggleListCompletion(newList);
+        const newList = {...updatedList, items: modifiedItems, lastModified: new Date().toISOString()};
+        updateStateAndMainList(newList);
     }
 
     //add or substract quantiry
-    const quantityOperation = async (id: string, quantity: number, operation: string) => {
+    const quantityOperation = (id: string, quantity: number, operation: string) => {
         let operator: number = 0;
         switch (operation) {
             case "add":
@@ -79,9 +74,8 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                 : item
         )
 
-        const newList = {...updatedList, items: modifiedItems};
-        setUpdatedList(newList);
-        await updateMainLists(newList);
+        const newList = {...updatedList, items: modifiedItems, lastModified: new Date().toISOString()};
+        updateStateAndMainList(newList);
     }
 
     //toggles between input menu and button
@@ -90,9 +84,9 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     }
 
     //confirms new item, checks if item name was added and turns value of "" into 1
-    const confirmNewItem = async (name: string, quantity: string) => {
+    const confirmNewItem = (name: string, quantity: string, unit: Unit) => {
         if(name.length === 0) {
-            setNameInputPlaceholder("Item name required!")
+            setNameInputPlaceholder("Item required!")
             return;
         }
         if(quantity === "") quantity = "1";
@@ -102,11 +96,12 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
             name: name,
             quantity: Number(quantity),
             checked: false,
+            unit: unit,
         }
 
         const modifiedItems = [...updatedList.items, newItem];
         const newList = {...updatedList, items: modifiedItems};
-        toggleListCompletion(newList);
+        updateStateAndMainList(newList);
         resetInput();
     }
 
@@ -120,7 +115,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     const resetInput = () => {
         setInputItemName("");
         setInputQuantityValue("");
-        setNameInputPlaceholder("Add item name...")
+        setNameInputPlaceholder("Add item...")
     }
 
     //handles item quantity values on change so the value doesn't go over 999 and if below 0 it adds "" for better user experience, "" will be changes to 1 later
@@ -151,7 +146,8 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                         <li key={item.id}>
                             <div className={`${styles.itemCompletedToggle} ${item.checked === true ? `${styles.activeToggle}` : ''}`}><FaCheck className={styles.checkIcon}/></div>
                             <button className={styles.itemBtn} onClick={() => toggleItemChecked(item.id)}>{item.name}</button>
-                            <p className={styles.itemQuantity}>{item.quantity <= 1 ? "" : "x " + item.quantity}</p>
+                            <p className={styles.itemQuantity}>{item.quantity <= 1 ? "" : "x" + item.quantity}</p>
+                            <p className={styles.itemQuanityType}>{item.unit}</p>
                             <button className={styles.addOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "add")}>+</button>
                             <button className={styles.substractOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "substract")}>-</button>
                             <button className={styles.deleteItemBtn} onClick={() => deleteItem(item.id)}>X</button>
@@ -162,6 +158,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                     {isInputingNewItem ? (
                         <div className={styles.addNewItemInputContainer}>
                             <input 
+                                ref={newItemInputRef}
                                 type="text" 
                                 maxLength={11}
                                 value={inputItemName}
@@ -178,7 +175,16 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                 placeholder="1"
                                 onChange={(e) => handleQuantityInput(e, setInputQuantityValue)}
                             />
-                            <button className={styles.confirmNewItem} onClick={() => confirmNewItem(inputItemName, inputQuantityValue)}><FaCheck className={styles.confirmIcon}/></button>
+                            <select 
+                                id="unit-select" 
+                                value={unitType} 
+                                onChange={(e) => setUnitType(e.target.value as Unit)}
+                            >
+                                {units.map((unit) => (
+                                    <option key={unit}>{unit === "" ? "none" : unit}</option>
+                                ))}
+                            </select>
+                            <button className={styles.confirmNewItem} onClick={() => confirmNewItem(inputItemName, inputQuantityValue, unitType)}><FaCheck className={styles.confirmIcon}/></button>
                             <button className={styles.cancelNewItemProcess} onClick={() => toggleInputingNewItem()}>X</button>
                         </div>
                     ) : (

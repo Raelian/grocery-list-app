@@ -1,13 +1,19 @@
+export type Unit = '' | 'kg';
+
+export const units: Unit[] = ['', 'kg']
+
 export interface GroceryItem {
     id: string;
     name: string;
     quantity: number;
     checked: boolean;
+    unit: Unit;
 }
 
 export interface GroceryList {
     id: string;
     name: string;
-    completed: boolean;
     items: GroceryItem[];
+    creationDate: string;
+    lastModified: string;
 }
