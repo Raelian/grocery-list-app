@@ -7,16 +7,6 @@ import ItemsPage from './components/itemsPage/ItemsPage';
 
 function App() {
   const [lists, setLists] = useState<GroceryList[]>([])
-  /*([
-        {id: '1', name: 'Grocery 1', completed: false, items: [] },
-        {id: '2', name: 'Grocery 2', completed: false, items: [] },
-        {id: '3', name: 'Grocery 3', completed: false, items: [
-            {id: "10", name: "apple", quantity: 3, checked: false},
-            {id: "20", name: "banana", quantity: 1, checked: false},
-            {id: "30", name: "cherry", quantity: 9, checked: true},
-          ] 
-        },
-  ]);*/
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -57,7 +47,6 @@ function App() {
   //update list
   const updateMainLists = async (newList: GroceryList) => {
     const updatedLists = lists.map((list) => list.id === newList.id ? newList : list);
-
     setLists(updatedLists);
     await saveLists(updatedLists);
   }

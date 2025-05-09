@@ -18,7 +18,8 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
     const [expandedListId, setExpandedListId] = useState<string | null>(null);
     const [expandedDeleteListId, setExpendedDeleteListId] = useState<string | null>(null);
     const [newListName, setNewListName] = useState('');
-    const [inputPlaceholder, setInputPlaceholder] = useState("Insert new list name...");
+    const [inputPlaceholder, setInputPlaceholder] = useState<string>("Insert new list name...");
+    const [infoVisibile, setInfoVisibility] = useState<boolean>(false);
     const newListInputRef = useRef<HTMLInputElement>(null);
 
     //handle input refernce when trying to add new list
@@ -77,36 +78,41 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
                                 <div className={styles.listDropdownMenu}>
                                     <div className={styles.listDropdownMenuInfo} onClick={() => setExpandedListId(prevId => prevId === list.id ? null : list.id)}>
                                         <p>{list.name}</p>
-                                        <p>
-                                            <span>Status: </span>
-                                            {list.items.length === 0
-                                                ? ("list empty")
-                                                : checkIfListComplete(list)
-                                                    ? ("list complete")
-                                                    : ("list incomplete")
-                                            }
-                                        </p>
-                                        {checkIfListComplete(list) || list.items.length !== 0 && (
-                                            <p>
-                                                <span>Items: </span>
-                                                {list.items.filter(item => item.checked).length} out of {list.items.length} checked
-                                            </p>
-                                        )}
-                                        <p>
-                                            <span>Created: </span>
-                                            {formatDate(list.creationDate)}
-                                        </p>
-                                        {list.creationDate !== list.lastModified && (
-                                            <p>
-                                                <span>Modified: </span>
-                                                {formatDate(list.lastModified)}
-                                            </p>
+                                        {infoVisibile && (
+                                            <>
+                                                <p>
+                                                    <span>Status: </span>
+                                                    {list.items.length === 0
+                                                        ? ("list empty")
+                                                        : checkIfListComplete(list)
+                                                            ? ("list complete")
+                                                            : ("list incomplete")
+                                                    }
+                                                </p>
+                                                {checkIfListComplete(list) || list.items.length !== 0 && (
+                                                    <p>
+                                                        <span>Items: </span>
+                                                        {list.items.filter(item => item.checked).length} out of {list.items.length} checked
+                                                    </p>
+                                                )}
+                                                <p>
+                                                    <span>Created: </span>
+                                                    {formatDate(list.creationDate)}
+                                                </p>
+                                                {list.creationDate !== list.lastModified && (
+                                                    <p>
+                                                        <span>Modified: </span>
+                                                        {formatDate(list.lastModified)}
+                                                    </p>
+                                                )}
+                                            </>
                                         )}
                                     </div>
                                     <div className={styles.listDropdownMenuBtns}>
                                         {expandedDeleteListId !== list.id ? (
                                             <>
                                                 <button className={styles.openListBtn} onClick={() => navigate(`/lists/${list.id}`, { state: {list}})}>Open</button>
+                                                <button className={styles.infoVisibleBtn} onClick={() => setInfoVisibility(prev => prev = !prev)}>{infoVisibile ? "Hide" : "Info"}</button>
                                                 <button className={styles.deleteListBtn} onClick={() => setExpendedDeleteListId(prevId => prevId === list.id ? null : list.id)}>Delete</button>
                                             </>
                                         ) : (

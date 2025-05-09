@@ -55,7 +55,7 @@
             border: 1px solid var(--color-element-2);
             border-radius: 4px;
             box-shadow: 1px 1px 2px var(--color-element-2);
-            background-color: var(--color-bg);
+            background-color: var(--color-back);
             display: flex;
             flex-direction: column;
             gap: 1px;
@@ -173,8 +173,14 @@
                         align-items: center;
                         gap: .5rem;
 
+                        //open list to view items btn
                         .openListBtn {
                             @include small-btn(var(--color-element-1), var(--color-add), $width: 4.25rem);
+                        }
+
+                        //show info btn
+                        .infoVisibleBtn {
+                            @include small-btn(var(--color-element-1), var(--color-toggle-info), $width: 4.25rem);
                         }
     
                         //delete list btn

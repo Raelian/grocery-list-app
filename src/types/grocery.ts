@@ -1,8 +1,9 @@
-export type Unit = '' | 'kg';
+export type Unit = '' | 'kg' | 'lbs' | 'buc' | 'pcs';
 
-export const units: Unit[] = ['', 'kg']
+export const units: Unit[] = ['', 'kg', 'lbs', 'buc', 'pcs']
 
 export interface GroceryItem {
+    
     id: string;
     name: string;
     quantity: number;
