@@ -29,7 +29,7 @@
             border-radius: 16px;
             border: 1px solid var(--color-element-2);
             margin-left: auto;
-
+            /*
             &::before {
                 content: "";
                 width: 20px;
@@ -41,6 +41,7 @@
                 top: 0;
                 left: 0;
             }
+            */
         }
     }
 
@@ -59,6 +60,7 @@
             display: flex;
             flex-direction: column;
             gap: 1px;
+            max-width: 100%;
 
             li {
                 padding: 4px;
@@ -89,13 +91,8 @@
 
                     //list completed toggle btn
                     .listCompletedToggle {
-                        display: hidden;
-                        justify-content: center;
-                        align-items: center;
                         width: 2rem;
                         height: 2rem;
-                        color: var(--color-element-1);
-                        flex-shrink: 0;
         
                         .checkIcon {
                             display: none;
@@ -103,7 +100,6 @@
                     }
         
                     .activeToggle {
-                        display: flex;
                         color: var(--color-confirm);
 
                         .checkIcon {
@@ -117,11 +113,20 @@
                     //list name
                     .listNameLabel {
                         background-color: inherit;
-                        border: none;
                         flex-grow: 1;
                         font-size: 1.2rem;
                         font-weight: bolder;
                         text-shadow: 2px 2px 4px var(--color-bg);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .listMenuToggleBtn {
+                        @include small-btn(var(--color-element-1), var(--color-toggle-info));
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                     }
                 }
     
@@ -151,6 +156,9 @@
                             text-align: center;
                             margin: 0 auto;
                             margin-bottom: .5rem;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
 
                         p:last-child {
@@ -173,9 +181,13 @@
                         align-items: center;
                         gap: .5rem;
 
+                        button {
+                            flex: 1;
+                        }
+
                         //open list to view items btn
-                        .openListBtn {
-                            @include small-btn(var(--color-element-1), var(--color-add), $width: 4.25rem);
+                        .closeListBtn {
+                            @include small-btn(var(--color-element-1), var(--color-back), $width: 4.25rem);
                         }
 
                         //show info btn
@@ -245,6 +257,12 @@
                 .cancelNewListProcess {
                     @include small-btn(var(--color-element-1), var(--color-cancel));
                 }
+            }
+
+            .listRequiredMessage {
+                margin-top: .5rem;
+                font-size: 1.2rem;
+                color: var(--color-cancel);
             }
 
             .addNewListBtn {

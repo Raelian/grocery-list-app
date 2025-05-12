@@ -36,17 +36,19 @@
   border-radius: 16px;
   border: 1px solid var(--color-element-2);
   margin-left: auto;
-}
-.pageContainer .listPageHeader .languageToggleBtn::before {
-  content: "";
-  width: 20px;
-  height: inherit;
-  background-color: var(--color-element-1);
-  border-radius: inherit;
-  border: 1px solid var(--color-element-2);
-  position: absolute;
-  top: 0;
-  left: 0;
+  /*
+  &::before {
+      content: "";
+      width: 20px;
+      height: inherit;
+      background-color: var(--color-element-1);
+      border-radius: inherit;
+      border: 1px solid var(--color-element-2);
+      position: absolute;
+      top: 0;
+      left: 0;
+  }
+  */
 }
 .pageContainer .listPageMain {
   display: flex;
@@ -63,6 +65,7 @@
   display: flex;
   flex-direction: column;
   gap: 1px;
+  max-width: 100%;
 }
 .pageContainer .listPageMain ul li {
   padding: 4px;
@@ -90,19 +93,13 @@
   width: 100%;
 }
 .pageContainer .listPageMain ul li .listLabelContainer .listCompletedToggle {
-  display: hidden;
-  justify-content: center;
-  align-items: center;
   width: 2rem;
   height: 2rem;
-  color: var(--color-element-1);
-  flex-shrink: 0;
 }
 .pageContainer .listPageMain ul li .listLabelContainer .listCompletedToggle .checkIcon {
   display: none;
 }
 .pageContainer .listPageMain ul li .listLabelContainer .activeToggle {
-  display: flex;
   color: var(--color-confirm);
 }
 .pageContainer .listPageMain ul li .listLabelContainer .activeToggle .checkIcon {
@@ -113,11 +110,29 @@
 }
 .pageContainer .listPageMain ul li .listLabelContainer .listNameLabel {
   background-color: inherit;
-  border: none;
   flex-grow: 1;
   font-size: 1.2rem;
   font-weight: bolder;
   text-shadow: 2px 2px 4px var(--color-bg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pageContainer .listPageMain ul li .listLabelContainer .listMenuToggleBtn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-toggle-info);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .pageContainer .listPageMain ul li .listDropdownMenu {
   display: flex;
@@ -145,6 +160,9 @@
   text-align: center;
   margin: 0 auto;
   margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuInfo p:last-child {
   margin-bottom: 0.5rem;
@@ -163,7 +181,10 @@
   align-items: center;
   gap: 0.5rem;
 }
-.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns .openListBtn {
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns button {
+  flex: 1;
+}
+.pageContainer .listPageMain ul li .listDropdownMenu .listDropdownMenuBtns .closeListBtn {
   width: 4.25rem;
   height: 2rem;
   border: none;
@@ -171,7 +192,7 @@
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);
-  background-color: var(--color-add);
+  background-color: var(--color-back);
   box-shadow: 1px 1px 2px var(--color-element-2);
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
@@ -288,6 +309,11 @@
   box-shadow: 1px 1px 2px var(--color-element-2);
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
+}
+.pageContainer .listPageMain .addNewListContainer .listRequiredMessage {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: var(--color-cancel);
 }
 .pageContainer .listPageMain .addNewListContainer .addNewListBtn {
   height: 100%;

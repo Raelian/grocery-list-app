@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import {GroceryList, GroceryItem} from './types/grocery';
+import {GroceryList} from './types/grocery';
 import {loadLists, saveLists} from './utils/storage';
 import ListsPage from './components/listsPage/ListsPage';
 import ItemsPage from './components/itemsPage/ItemsPage';

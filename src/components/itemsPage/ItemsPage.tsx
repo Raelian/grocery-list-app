@@ -1,8 +1,10 @@
 import {useState, useEffect, useRef} from "react";
 import {GroceryItem, GroceryList, units, Unit} from "../../types/grocery";
 import {useLocation, useNavigate} from "react-router-dom";
-import {FaCheck, FaArrowLeft} from 'react-icons/fa';
+import {FaCheck, FaArrowLeft, FaPen} from 'react-icons/fa';
 import styles from './Items.Page.module.scss';
+import { cleanInput } from "../../utils/cleanInput";
+import {useTranslation} from 'react-i18next';
 
 interface ItemsPageProps {
     updateMainLists: (newOriginalList: GroceryList) => Promise<void>;
@@ -11,14 +13,34 @@ interface ItemsPageProps {
 function ItemsPage({updateMainLists}: ItemsPageProps) {
     const location = useLocation();
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const list = location.state.list as GroceryList;
     const [updatedList, setUpdatedList] = useState<GroceryList>(list);
     const [isInputingNewItem, setIfIsInputingNewItem] = useState<boolean>(false);
     const [inputQuantityValue, setInputQuantityValue] = useState<string>("");
     const [inputItemName, setInputItemName] = useState<string>("");
-    const [nameInputPlaceholder, setNameInputPlaceholder] = useState<string>("Add item...");
     const [unitType, setUnitType] = useState<Unit>("");
     const newItemInputRef = useRef<HTMLInputElement>(null);
+    const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
+    const [itemAlertMessage, setItemAlertMessage] = useState<boolean>(false);
+
+    //reference for add new item input menu
+    let newItemInputMenuRef = useRef<HTMLDivElement | null>(null);
+
+    //use effect for when clickling outside the referenced containers
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+           if(!newItemInputMenuRef.current?.contains(e.target as Node)){
+                setIfIsInputingNewItem(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, []);
 
     //handle input refernce when trying to add new list
     useEffect(() => {
@@ -70,7 +92,9 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
 
         const modifiedItems = updatedList.items.map((item) =>
             item.id === id
-                ? {...item, quantity: item.quantity + operator}
+                ? {...item, 
+                    quantity: item.quantity + operator
+                }
                 : item
         )
 
@@ -86,7 +110,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     //confirms new item, checks if item name was added and turns value of "" into 1
     const confirmNewItem = (name: string, quantity: string, unit: Unit) => {
         if(name.length === 0) {
-            setNameInputPlaceholder("Item required!")
+            setItemAlertMessage(true);
             return;
         }
         if(quantity === "") quantity = "1";
@@ -106,7 +130,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     }
 
     //open new item input menu
-    const openNewItemInput = () => {
+    const handleNewItemInput = () => {
         resetInput();
         toggleInputingNewItem();
     }
@@ -115,7 +139,8 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     const resetInput = () => {
         setInputItemName("");
         setInputQuantityValue("");
-        setNameInputPlaceholder("Add item...")
+        setItemAlertMessage(false);
+        setUnitType("");
     }
 
     //handles item quantity values on change so the value doesn't go over 999 and if below 0 it adds "" for better user experience, "" will be changes to 1 later
@@ -134,61 +159,123 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         setInputQuantityValue(userInput);
     }
 
+    //translate map units
+    const translateFromMap = (unit: Unit) => {
+        if(unit === "") return t('none');
+        if(unit === "lbs") return t('lbs');
+        if(unit === "pcs") return t('pcs');
+        return unit;
+    }
+
     return (
         <div className={styles.pageContainer}>
             <header className={styles.itemsPageHeader}>
-                <button className={styles.itemsPageBackBtn} onClick={() => navigate('/')}><FaArrowLeft className={styles.itemsPageBackIcon}/></button>
+                <button 
+                    className={styles.itemsPageBackBtn} 
+                    onClick={() => navigate('/')}
+                >
+                    <FaArrowLeft className={styles.itemsPageBackIcon}/>
+                    {t('back')}
+                </button>
                 <h1>{updatedList.name}</h1>
             </header>
             <main className={styles.itemsPageMain}>
                 <ul>
                     {updatedList.items.map((item) => (
                         <li key={item.id}>
-                            <div className={`${styles.itemCompletedToggle} ${item.checked === true ? `${styles.activeToggle}` : ''}`}><FaCheck className={styles.checkIcon}/></div>
-                            <button className={styles.itemBtn} onClick={() => toggleItemChecked(item.id)}>{item.name}</button>
-                            <p className={styles.itemQuantity}>{item.quantity <= 1 ? "" : "x" + item.quantity}</p>
-                            <p className={styles.itemQuanityType}>{item.unit}</p>
-                            <button className={styles.addOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "add")}>+</button>
-                            <button className={styles.substractOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "substract")}>-</button>
-                            <button className={styles.deleteItemBtn} onClick={() => deleteItem(item.id)}>X</button>
+                            <div className={styles.itemTopContainer}>
+                                <div 
+                                    className={styles.itemInputContainer} 
+                                    onClick={() => toggleItemChecked(item.id)}
+                                >
+                                    <div 
+                                        className={`${styles.itemCompletedToggle} ${item.checked === true ? `${styles.activeToggle}` : ''}`}
+                                    >
+                                        <FaCheck className={styles.checkIcon}/>
+                                    </div>
+                                    <button className={styles.itemBtn}>
+                                        {item.name}
+                                    </button>
+                                    <p className={styles.itemQuantity}>
+                                        {item.quantity <= 0 ? "" : "x" + item.quantity}
+                                    </p>
+                                    <p className={styles.itemQuantityType}>
+                                        {(item.unit === "" || item.quantity === 0) ? "" : item.unit}
+                                    </p>
+                                </div>
+                                <button 
+                                    className={`${styles.itemMenuToggleBtn} ${expandedItemId === item.id ? `${styles.open}` : ""}`} 
+                                    onClick={() => setExpandedItemId(prevId => prevId === item.id ? null : item.id)}
+                                >
+                                    <FaPen className={styles.penIcon}/>
+                                </button>
+                            </div>
+                            {expandedItemId === item.id && (
+                                <div className={styles.itemBtnsContainer}>
+                                    <button className={styles.addOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "add")}>+</button>
+                                    <button className={styles.substractOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "substract")}>-</button>
+                                    <button className={styles.deleteItemBtn} onClick={() => deleteItem(item.id)}>{t('delete')}</button>
+                                </div> 
+                            )}
                         </li>
                     ))}
                 </ul>
-                <div className={styles.addNewItemContainer}>
+                <div 
+                    className={styles.addNewItemContainer} 
+                    ref={newItemInputMenuRef}
+                >
                     {isInputingNewItem ? (
                         <div className={styles.addNewItemInputContainer}>
                             <input 
                                 ref={newItemInputRef}
                                 type="text" 
-                                maxLength={11}
+                                maxLength={32}
                                 value={inputItemName}
                                 className={styles.itemNameInput} 
-                                placeholder={nameInputPlaceholder}
+                                placeholder={t('placeholderItemName')}
                                 onChange={(e) => setInputItemName(e.target.value)}
                             />
-                            <input 
-                                type="number" 
-                                min="1" 
-                                max="999" 
-                                value={inputQuantityValue} 
-                                className={styles.itemQuantityInput} 
-                                placeholder="1"
-                                onChange={(e) => handleQuantityInput(e, setInputQuantityValue)}
-                            />
-                            <select 
-                                id="unit-select" 
-                                value={unitType} 
-                                onChange={(e) => setUnitType(e.target.value as Unit)}
-                            >
-                                {units.map((unit) => (
-                                    <option key={unit}>{unit === "" ? "none" : unit}</option>
-                                ))}
-                            </select>
-                            <button className={styles.confirmNewItem} onClick={() => confirmNewItem(inputItemName, inputQuantityValue, unitType)}><FaCheck className={styles.confirmIcon}/></button>
-                            <button className={styles.cancelNewItemProcess} onClick={() => toggleInputingNewItem()}>X</button>
+                            {itemAlertMessage && 
+                                <p className={styles.itemRequiredMessage}>{t('itemRequired')}</p>
+                            }
+                            <div className={styles.lowerNewItemInputContainer}>
+                                <input 
+                                    type="number" 
+                                    min="1" 
+                                    max="999" 
+                                    value={inputQuantityValue} 
+                                    className={styles.itemQuantityInput} 
+                                    placeholder={t('placeholderQuantity')}
+                                    onChange={(e) => handleQuantityInput(e, setInputQuantityValue)}
+                                />
+                                <select 
+                                    id="unit-select" 
+                                    value={unitType}
+                                    className={styles.unitSelector}
+                                    onChange={(e) => setUnitType(e.target.value as Unit)}
+                                >   
+                                    <option value={t('unit')} disabled>{t('unit')}</option>
+                                    {units.map((unit) => (
+                                        <option key={unit}>{translateFromMap(unit)}</option>
+                                    ))}
+                                </select>
+                                <button 
+                                    className={styles.confirmNewItem} 
+                                    onClick={() => confirmNewItem(
+                                        cleanInput(inputItemName), 
+                                        inputQuantityValue, 
+                                        String(unitType) === `${t('none')}` ? "" as Unit : unitType)
+                                    }>
+                                        <FaCheck className={styles.confirmIcon}/>
+                                </button>
+                                <button 
+                                    className={styles.cancelNewItemProcess} 
+                                    onClick={() => handleNewItemInput()}
+                                >X</button>
+                            </div> 
                         </div>
                     ) : (
-                        <button className={styles.addNewItemBtn} onClick={() => openNewItemInput()}>+</button>
+                        <button className={styles.addNewItemBtn} onClick={() => handleNewItemInput()}>+</button>
                     )}
                 </div>
             </main>

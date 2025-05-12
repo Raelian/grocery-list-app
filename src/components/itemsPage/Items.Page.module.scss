@@ -6,21 +6,18 @@
 
     .itemsPageHeader {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        position: relative;
+        flex-direction: column;
+        justify-content: start;
+        align-items: left;
         width: 100%;
 
         .itemsPageBackBtn {
-            @include small-btn(var(--color-element-1), var(--color-back));
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
+            @include small-btn(var(--color-element-1), var(--color-back), $width: 6rem);
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-left: 0;
+            gap: .5rem;
 
             .itemsPagebackIcon {
                 width: 1rem;
@@ -29,9 +26,11 @@
         }
 
         h1 {
-            flex-grow: 1;
             text-align: center;
-            min-width: 0;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
@@ -49,16 +48,14 @@
             background-color: var(--color-bg);
             display: flex;
             flex-direction: column;
-            gap: 1px;
+            gap: .1rem;
+            max-width: 100%;
 
             li {
-                height: 3rem;
                 padding: 4px;
                 background-color: var(--color-element-1);
                 display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+                flex-direction: column;
                 gap: .5rem;
 
                 &:first-child {
@@ -71,93 +68,130 @@
                     border-bottom-left-radius: 4px;
                 }
 
-                .itemCompletedToggle {
-                    display: hidden;
-                    /*
-                    border: 1px solid black;
-                    border-radius: 6px;
-                    padding: 2px;
-                    box-shadow: 1px 1px 2px var(--color-element-2);
-                    */
-                    justify-content: center;
+                .itemTopContainer {
+                    display: flex;
+                    flex-direction: row;
                     align-items: center;
-                    width: 2rem;
-                    height: 2rem;
-                    color: var(--color-element-1);
-                    flex-shrink: 0;
-    
-                    .checkIcon {
+
+                    .itemInputContainer {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: start;
+                        align-items: center;
                         width: 100%;
-                        height: 100%;
+                        gap: .5rem;
+    
+                        .itemCompletedToggle {
+                            justify-content: center;
+                            align-items: center;
+                            width: 2rem;
+                            height: 2rem;
+                            color: var(--color-element-1);
+                            flex-shrink: 0;
+            
+                            .checkIcon {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+        
+                        .activeToggle {
+                            display: flex;
+                            color: var(--color-confirm);
+        
+                            .checkIcon {
+                                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, .5));
+                            }
+                        }
+        
+                        //item name btn
+                        .itemBtn {
+                            height: 100%;
+                            background-color: inherit;
+                            border: none;
+                            font-size: 1.2rem;
+                            font-weight: bolder;
+                            text-align: left;
+                            text-shadow: 2px 2px 4px var(--color-bg);
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+        
+                        .itemQuantity {
+                            height: 100%;
+                            background-color: inherit;
+                            border: none;
+                            font-size: 1.2rem;
+                            font-weight: bolder;
+                            text-shadow: 2px 2px 4px var(--color-bg);
+                            display: flex;
+                            justify-content: center;
+                            align-items: right;
+                        }
+    
+                        .itemQuantityType {
+                            height: 100%;
+                            font-size: 1.2rem;
+                            font-weight: bolder;
+                        }
+                    }
+
+                    .itemMenuToggleBtn {
+                        @include small-btn(var(--color-element-1), var(--color-toggle-info));
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .open {
+                        background-color: var(--color-back);
                     }
                 }
 
-                .activeToggle {
+                .itemBtnsContainer {
                     display: flex;
-                    color: var(--color-confirm);
-
-                    .checkIcon {
-                        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, .5));
-                    }
-                }
-
-                //item name btn
-                .itemBtn {
-                    height: 100%;
-                    background-color: inherit;
-                    border: none;
-                    flex-grow: 1;
-                    font-size: 1.2rem;
-                    font-weight: bolder;
-                    text-shadow: 2px 2px 4px var(--color-bg);
-                }
-
-                .itemQuantity {
-                    height: 100%;
-                    background-color: inherit;
-                    border: none;
-                    font-size: 1.2rem;
-                    font-weight: bolder;
-                    text-shadow: 2px 2px 4px var(--color-bg);
-                    width: 3rem;
-                    display: flex;
+                    flex-direction: row;
                     justify-content: center;
                     align-items: center;
-                }
+                    width: 100%;
+                    gap: .5rem;
 
-                //add one item btn
-                .addOneItemBtn {
-                    @include small-btn(var(--color-element-1), var(--color-add));
-                }
+                    button {
+                        flex: 1;
+                    }
 
-                //substract one item btn
-                .substractOneItemBtn {
-                    @include small-btn(var(--color-element-1), var(--color-substract));
-                }
-    
-                //delete item btn
-                .deleteItemBtn {
-                    @include small-btn(var(--color-element-1), var(--color-cancel));
+                    //add one item btn
+                    .addOneItemBtn {
+                        @include small-btn(var(--color-element-1), var(--color-add), $font-size: 1.5rem);
+                    }
+
+                    //substract one item btn
+                    .substractOneItemBtn {
+                        @include small-btn(var(--color-element-1), var(--color-substract), $font-size:1.5rem);
+                    }
+        
+                    //delete item btn
+                    .deleteItemBtn {
+                        @include small-btn(var(--color-element-1), var(--color-cancel), $width: 4.25rem);
+                    }
                 }
             }
         }
 
         .addNewItemContainer {
-            height: 3rem;
             padding: 4px;
             background-color: inherit;
 
             .addNewItemInputContainer {
                 display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                gap: 4px;
+                flex-direction: column;
+                gap: .5rem;
                 height: 100%;
                 width: 100%;
 
                 input {
-                    height: 100%;
+                    height: 2rem;
                     border-radius: 8px;
                     padding: 4px 6px;
                     font-size: 1.2rem;
@@ -168,27 +202,61 @@
                     outline: none;
                 }
 
+                .itemRequiredMessage {
+                    font-size: 1.2rem;
+                    color: var(--color-cancel);
+                }
+
                 .itemNameInput {
                     flex-grow: 1;
                 }
 
-                .itemQuantityInput {
-                    min-width: 3rem;
-                    max-width: 3.5rem;
-                    text-align: center;         
-                }
+                .lowerNewItemInputContainer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: end;
+                    align-items: center;
+                    gap: .5rem;
+                    
+                    .itemQuantityInput {
+                        min-width: 3rem;
+                        text-align: center;
+                        text-align: left;
+                        flex-grow: 1;
 
-                .confirmNewItem {
-                    @include small-btn(var(--color-element-1), var(--color-confirm));
-                }
+                        -moz-appearance: textfield;
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+                    }
 
-                .cancelNewItemProcess {
-                    @include small-btn(var(--color-element-1), var(--color-cancel));
+                    .unitSelector {
+                        height: 2rem;
+                        padding: 0 4px;
+                        border-radius: 8px;
+                        font-size: 1.2rem;
+                        box-shadow: 1px 1px 2px var(--color-element-2);
+                        outline: none;
+
+                        option {
+                            border-radius: inherit;
+                        }
+                    }
+    
+                    .confirmNewItem {
+                        @include small-btn(var(--color-element-1), var(--color-confirm));
+                    }
+    
+                    .cancelNewItemProcess {
+                        @include small-btn(var(--color-element-1), var(--color-cancel));
+                    }
                 }
             }
 
             .addNewItemBtn {
-                height: 100%;
+                height: 3rem;
                 width: 100%;
                 justify-self: center;
                 align-self: center;

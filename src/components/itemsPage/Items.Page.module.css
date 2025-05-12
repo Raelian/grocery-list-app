@@ -14,14 +14,13 @@
 }
 .pageContainer .itemsPageHeader {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  flex-direction: column;
+  justify-content: start;
+  align-items: left;
   width: 100%;
 }
 .pageContainer .itemsPageHeader .itemsPageBackBtn {
-  width: 2rem;
+  width: 6rem;
   height: 2rem;
   border: none;
   font-size: 1.2rem;
@@ -32,22 +31,22 @@
   box-shadow: 1px 1px 2px var(--color-element-2);
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 0;
+  gap: 0.5rem;
 }
 .pageContainer .itemsPageHeader .itemsPageBackBtn .itemsPagebackIcon {
   width: 1rem;
   height: 1rem;
 }
 .pageContainer .itemsPageHeader h1 {
-  flex-grow: 1;
   text-align: center;
-  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pageContainer .itemsPageMain {
   display: flex;
@@ -63,16 +62,14 @@
   background-color: var(--color-bg);
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0.1rem;
+  max-width: 100%;
 }
 .pageContainer .itemsPageMain ul li {
-  height: 3rem;
   padding: 4px;
   background-color: var(--color-element-1);
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 0.5rem;
 }
 .pageContainer .itemsPageMain ul li:first-child {
@@ -83,14 +80,20 @@
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-.pageContainer .itemsPageMain ul li .itemCompletedToggle {
-  display: hidden;
-  /*
-  border: 1px solid black;
-  border-radius: 6px;
-  padding: 2px;
-  box-shadow: 1px 1px 2px var(--color-element-2);
-  */
+.pageContainer .itemsPageMain ul li .itemTopContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .itemCompletedToggle {
   justify-content: center;
   align-items: center;
   width: 2rem;
@@ -98,43 +101,80 @@
   color: var(--color-element-1);
   flex-shrink: 0;
 }
-.pageContainer .itemsPageMain ul li .itemCompletedToggle .checkIcon {
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .itemCompletedToggle .checkIcon {
   width: 100%;
   height: 100%;
 }
-.pageContainer .itemsPageMain ul li .activeToggle {
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .activeToggle {
   display: flex;
   color: var(--color-confirm);
 }
-.pageContainer .itemsPageMain ul li .activeToggle .checkIcon {
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .activeToggle .checkIcon {
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
-.pageContainer .itemsPageMain ul li .itemBtn {
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .itemBtn {
   height: 100%;
   background-color: inherit;
   border: none;
-  flex-grow: 1;
   font-size: 1.2rem;
   font-weight: bolder;
+  text-align: left;
   text-shadow: 2px 2px 4px var(--color-bg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.pageContainer .itemsPageMain ul li .itemQuantity {
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .itemQuantity {
   height: 100%;
   background-color: inherit;
   border: none;
   font-size: 1.2rem;
   font-weight: bolder;
   text-shadow: 2px 2px 4px var(--color-bg);
-  width: 3rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: right;
 }
-.pageContainer .itemsPageMain ul li .addOneItemBtn {
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .itemQuantityType {
+  height: 100%;
+  font-size: 1.2rem;
+  font-weight: bolder;
+}
+.pageContainer .itemsPageMain ul li .itemTopContainer .itemMenuToggleBtn {
   width: 2rem;
   height: 2rem;
   border: none;
   font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-toggle-info);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pageContainer .itemsPageMain ul li .itemTopContainer .open {
+  background-color: var(--color-back);
+}
+.pageContainer .itemsPageMain ul li .itemBtnsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+.pageContainer .itemsPageMain ul li .itemBtnsContainer button {
+  flex: 1;
+}
+.pageContainer .itemsPageMain ul li .itemBtnsContainer .addOneItemBtn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.5rem;
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);
@@ -143,11 +183,11 @@
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
 }
-.pageContainer .itemsPageMain ul li .substractOneItemBtn {
+.pageContainer .itemsPageMain ul li .itemBtnsContainer .substractOneItemBtn {
   width: 2rem;
   height: 2rem;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);
@@ -156,8 +196,8 @@
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
 }
-.pageContainer .itemsPageMain ul li .deleteItemBtn {
-  width: 2rem;
+.pageContainer .itemsPageMain ul li .itemBtnsContainer .deleteItemBtn {
+  width: 4.25rem;
   height: 2rem;
   border: none;
   font-size: 1.2rem;
@@ -170,21 +210,18 @@
   flex-shrink: 0;
 }
 .pageContainer .itemsPageMain .addNewItemContainer {
-  height: 3rem;
   padding: 4px;
   background-color: inherit;
 }
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+  gap: 0.5rem;
   height: 100%;
   width: 100%;
 }
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer input {
-  height: 100%;
+  height: 2rem;
   border-radius: 8px;
   padding: 4px 6px;
   font-size: 1.2rem;
@@ -194,15 +231,43 @@
   min-width: 0;
   outline: none;
 }
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .itemRequiredMessage {
+  font-size: 1.2rem;
+  color: var(--color-cancel);
+}
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .itemNameInput {
   flex-grow: 1;
 }
-.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .itemQuantityInput {
-  min-width: 3rem;
-  max-width: 3.5rem;
-  text-align: center;
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 0.5rem;
 }
-.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .confirmNewItem {
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .itemQuantityInput {
+  min-width: 3rem;
+  text-align: center;
+  text-align: left;
+  flex-grow: 1;
+  -moz-appearance: textfield;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .itemQuantityInput::-webkit-outer-spin-button, .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .itemQuantityInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .unitSelector {
+  height: 2rem;
+  padding: 0 4px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  outline: none;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .unitSelector option {
+  border-radius: inherit;
+}
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .confirmNewItem {
   width: 2rem;
   height: 2rem;
   border: none;
@@ -215,7 +280,7 @@
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
 }
-.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .cancelNewItemProcess {
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .cancelNewItemProcess {
   width: 2rem;
   height: 2rem;
   border: none;
@@ -229,7 +294,7 @@
   flex-shrink: 0;
 }
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemBtn {
-  height: 100%;
+  height: 3rem;
   width: 100%;
   justify-self: center;
   align-self: center;
