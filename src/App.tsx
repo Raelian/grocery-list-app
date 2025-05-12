@@ -52,7 +52,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/grocery-list-app">
       <Routes>
         <Route path='/' element={<ListsPage lists={lists} deleteList={deleteList} addNewList={addNewList}/>} />
         <Route path='/lists/:id' element={<ItemsPage updateMainLists={updateMainLists}/>} />
