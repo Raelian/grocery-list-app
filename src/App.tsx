@@ -2,12 +2,15 @@ import {useState, useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {GroceryList} from './types/grocery';
 import {loadLists, saveLists} from './utils/storage';
+import { useNavigate } from 'react-router-dom';
 import ListsPage from './components/listsPage/ListsPage';
 import ItemsPage from './components/itemsPage/ItemsPage';
 import ImportPage from './components/importPage/ImportPage';
 
 function App() {
   const [lists, setLists] = useState<GroceryList[]>([])
+  const [justImported, setJustImported] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -20,6 +23,13 @@ function App() {
     fetchLists();
   }, []); //empty dependency array means this runs once when the component is first rendered
 
+  useEffect(() => {
+    if(justImported) {
+      setJustImported(false);
+      navigate("/");
+    }
+  }, [justImported, navigate]);
+
   //delete list by id
   const deleteList = async (id: string) => {
     const updatedLists = lists.filter(list => list.id !== id); //remove list with that id
@@ -28,7 +38,7 @@ function App() {
   }
 
   //add new list
-  const addNewList = async (input: string | GroceryList, callback?: () => void) => {
+  const addNewList = async (input: string | GroceryList) => {
       const newList: GroceryList = 
         typeof input === "string"
           ? {
@@ -44,7 +54,7 @@ function App() {
       const updatedLists = [...storedLists, newList];
       setLists(updatedLists); //update the state with the new list
       await saveLists(updatedLists); //save the new list to localforage
-      if(callback) callback();
+      setJustImported(true);
   }
 
   //update list

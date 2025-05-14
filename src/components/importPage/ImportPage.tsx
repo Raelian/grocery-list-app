@@ -6,7 +6,7 @@ import styles from "./ImportedPage.module.scss";
 import { useTranslation } from 'react-i18next';
 
 interface ImportPageProps {
-  addNewList: (input: string | GroceryList, callback?: () => void) => Promise<void>;
+  addNewList: (input: string | GroceryList) => Promise<void>;
 }
 
 const ImportPage: React.FC<ImportPageProps> = ({ addNewList }) => {
@@ -28,7 +28,7 @@ const ImportPage: React.FC<ImportPageProps> = ({ addNewList }) => {
         const importedList: GroceryList = JSON.parse(jsonString);
 
         // Add imported list using addNewList from App.tsx
-        await addNewList(importedList, () => navigate("/"));
+        await addNewList(importedList);
       } catch (error) {
         console.error("Failed to decode or import list: ", error);
         navigate("/");
