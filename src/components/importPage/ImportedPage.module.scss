@@ -1,2 +1,10 @@
 @use '../../styles/containers/PageContainer.scss' as *;
 
+.pageContainer {
+    @include page-container();
+
+    .importMessage {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+}

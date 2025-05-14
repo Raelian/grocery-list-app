@@ -1,1 +1,18 @@
-/*# sourceMappingURL=ImportedPage.module.css.map */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--color-bg);
+  padding: 10px;
+  width: 100%;
+  min-width: 300px;
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+}
+.pageContainer .importMessage {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}/*# sourceMappingURL=ImportedPage.module.css.map */

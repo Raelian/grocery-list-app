@@ -8,18 +8,17 @@ import ImportPage from './components/importPage/ImportPage';
 
 function App() {
   const [lists, setLists] = useState<GroceryList[]>([])
-  const [justImported, setJustImported] = useState<boolean>(false);
 
+  const fetchLists = async () => {
+    const loadedLists = await loadLists();
+    if(loadedLists.length > 0) {
+      setLists(loadedLists);
+    }
+  };
+  //fetch list on startup
   useEffect(() => {
-    const fetchLists = async () => {
-      const loadedLists = await loadLists();
-      if(loadedLists.length > 0) {
-        setLists(loadedLists);
-      }
-    };
-
     fetchLists();
-  }, []); //empty dependency array means this runs once when the component is first rendered
+  }, []);
 
   //delete list by id
   const deleteList = async (id: string) => {
@@ -45,7 +44,7 @@ function App() {
       const updatedLists = [...storedLists, newList];
       setLists(updatedLists); //update the state with the new list
       await saveLists(updatedLists); //save the new list to localforage
-      setJustImported(true);
+      await fetchLists();
   }
 
   //update list
@@ -60,7 +59,7 @@ function App() {
       <Routes>
         <Route path='/' element={<ListsPage lists={lists} deleteList={deleteList} addNewList={addNewList}/>} />
         <Route path='/lists/:id' element={<ItemsPage updateMainLists={updateMainLists}/>} />
-        <Route path='/import' element={<ImportPage addNewList={addNewList} justImported={justImported} setJustImported={setJustImported}/>}></Route>
+        <Route path='/import' element={<ImportPage addNewList={addNewList}/>}></Route>
       </Routes>
     </BrowserRouter>
   )

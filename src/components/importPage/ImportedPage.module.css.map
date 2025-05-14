@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"ImportedPage.module.css"}
+{"version":3,"sources":["ImportedPage.module.scss","../../styles/containers/PageContainer.scss","ImportedPage.module.css"],"names":[],"mappings":"AAEA;ECDI,aAAA;EACA,sBAAA;EACA,sBAAA;EACA,mBAAA;EACA,SAAA;EACA,iCAAA;EACA,aAAA;EACA,WAAA;EACA,gBAAA;EACA,gBAAA;EACA,kBAAA;EACA,cAAA;ACCJ;AFRI;EACI,iBAAA;EACA,gBAAA;AEUR","file":"ImportedPage.module.css"}
