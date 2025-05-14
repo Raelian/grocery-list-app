@@ -38,7 +38,7 @@ const ImportPage: React.FC<ImportPageProps> = ({ addNewList }) => {
 
     // Call the importList function to handle the import
     importList();
-  }, []); // Ensure these dependencies are correct to avoid unwanted loops
+  }, [location.search]); // Ensure these dependencies are correct to avoid unwanted loops
 
   return <div className={styles.pageContainer}>
     <p>{t('importing')}</p>

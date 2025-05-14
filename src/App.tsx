@@ -39,8 +39,9 @@ function App() {
               lastModified: new Date().toISOString(),
             }
           : input;
-
-      const updatedLists = [...lists, newList];
+      
+      const storedLists = await loadLists();
+      const updatedLists = [...storedLists, newList];
       setLists(updatedLists); //update the state with the new list
       await saveLists(updatedLists); //save the new list to localforage
   }
