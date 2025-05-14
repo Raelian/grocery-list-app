@@ -12,7 +12,8 @@
         width: 100%;
 
         .itemsPageBackBtn {
-            @include small-btn(var(--color-element-1), var(--color-back), $width: 6rem);
+            @include small-btn(var(--color-element-1), var(--color-back), $min-width: 6rem);
+            max-width: 6rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -173,7 +174,7 @@
         
                     //delete item btn
                     .deleteItemBtn {
-                        @include small-btn(var(--color-element-1), var(--color-cancel), $width: 4.25rem);
+                        @include small-btn(var(--color-element-1), var(--color-cancel), $min-width: 4.25rem);
                     }
                 }
             }

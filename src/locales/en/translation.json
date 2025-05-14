@@ -12,6 +12,8 @@
     "deleteQuestion": "Delete list?",
     "yes": "Yes",
     "no": "No",
+    "importing": "One moment, importing list...",
+    "share": "Share",
     "items": "Items:",
     "status": "Status:",
     "created": "Created:",

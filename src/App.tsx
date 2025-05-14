@@ -4,6 +4,7 @@ import {GroceryList} from './types/grocery';
 import {loadLists, saveLists} from './utils/storage';
 import ListsPage from './components/listsPage/ListsPage';
 import ItemsPage from './components/itemsPage/ItemsPage';
+import ImportPage from './components/importPage/ImportPage';
 
 function App() {
   const [lists, setLists] = useState<GroceryList[]>([])
@@ -56,6 +57,7 @@ function App() {
       <Routes>
         <Route path='/' element={<ListsPage lists={lists} deleteList={deleteList} addNewList={addNewList}/>} />
         <Route path='/lists/:id' element={<ItemsPage updateMainLists={updateMainLists}/>} />
+        <Route path='/import' element={<ImportPage addNewList={addNewList}/>}></Route>
       </Routes>
     </BrowserRouter>
   )

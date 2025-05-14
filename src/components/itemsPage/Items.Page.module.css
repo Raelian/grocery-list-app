@@ -20,10 +20,10 @@
   width: 100%;
 }
 .pageContainer .itemsPageHeader .itemsPageBackBtn {
-  width: 6rem;
+  min-width: 6rem;
   height: 2rem;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);
@@ -31,6 +31,7 @@
   box-shadow: 1px 1px 2px var(--color-element-2);
   text-shadow: 1px 1px 2px var(--color-element-2);
   flex-shrink: 0;
+  max-width: 6rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,10 +142,10 @@
   font-weight: bolder;
 }
 .pageContainer .itemsPageMain ul li .itemTopContainer .itemMenuToggleBtn {
-  width: 2rem;
+  min-width: 2rem;
   height: 2rem;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);
@@ -171,7 +172,7 @@
   flex: 1;
 }
 .pageContainer .itemsPageMain ul li .itemBtnsContainer .addOneItemBtn {
-  width: 2rem;
+  min-width: 2rem;
   height: 2rem;
   border: none;
   font-size: 1.5rem;
@@ -184,7 +185,7 @@
   flex-shrink: 0;
 }
 .pageContainer .itemsPageMain ul li .itemBtnsContainer .substractOneItemBtn {
-  width: 2rem;
+  min-width: 2rem;
   height: 2rem;
   border: none;
   font-size: 1.5rem;
@@ -197,10 +198,10 @@
   flex-shrink: 0;
 }
 .pageContainer .itemsPageMain ul li .itemBtnsContainer .deleteItemBtn {
-  width: 4.25rem;
+  min-width: 4.25rem;
   height: 2rem;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);
@@ -268,10 +269,10 @@
   border-radius: inherit;
 }
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .confirmNewItem {
-  width: 2rem;
+  min-width: 2rem;
   height: 2rem;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);
@@ -281,10 +282,10 @@
   flex-shrink: 0;
 }
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .cancelNewItemProcess {
-  width: 2rem;
+  min-width: 2rem;
   height: 2rem;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bolder;
   border-radius: 6px;
   color: var(--color-element-1);

@@ -1,5 +1,5 @@
-@mixin small-btn($color, $bg-color, $width: 2rem, $height: 2rem, $font-size: 1.2rem) {
-    width: $width;
+@mixin small-btn($color, $bg-color, $min-width: 2rem, $height: 2rem, $font-size: 1rem) {
+    min-width: $min-width;
     height: $height;
     border: none;
     font-size: $font-size;

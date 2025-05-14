@@ -7,6 +7,7 @@ import styles from "./ListsPage.module.scss";
 import { cleanInput } from '../../utils/cleanInput';
 import {useTranslation} from 'react-i18next';
 import {saveLanguage} from '../../utils/languageStorage';
+import { generateShareUrl } from '../../utils/share';
 
 interface ListsPageProps {
     lists: GroceryList[];
@@ -24,6 +25,13 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
     const newListInputRef = useRef<HTMLInputElement>(null);
     const [listAlertMessage, setListAlertMessage] = useState<boolean>(false);
     const {i18n, t} = useTranslation();
+
+    //handle share list URL
+    const handleShare = (list: GroceryList) => {
+        const shareUrl = generateShareUrl(list);
+        navigator.clipboard.writeText(shareUrl);
+        alert("Share link copied to clipboard!");
+    }
 
     //handle language change using i18n
     const toggleLanguage = async () => {
@@ -149,13 +157,34 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
                                     <div className={styles.listDropdownMenuBtns}>
                                         {expandedDeleteListId !== list.id ? (
                                             <>
-                                                <button className={styles.infoVisibleBtn} onClick={() => setInfoVisibility(prev => prev = !prev)}>{infoVisibile ? t("hide") : t("info")}</button>
-                                                <button className={styles.deleteListBtn} onClick={() => setExpendedDeleteListId(prevId => prevId === list.id ? null : list.id)}>{t('delete')}</button>
-                                                <button className={styles.closeListBtn} onClick={() => setExpandedListId(prevId => prevId === list.id ? null : list.id)}>{t('close')}</button>
+                                                <button 
+                                                    className={styles.infoVisibleBtn} 
+                                                    onClick={() => setInfoVisibility(prev => prev = !prev)}
+                                                >
+                                                    {infoVisibile ? t("hide") : t("info")}
+                                                </button>                     
+                                                <button 
+                                                    className={styles.shareUrlBtn} 
+                                                    onClick={() => handleShare(list)}
+                                                >
+                                                    {t('share')}
+                                                </button>
+                                                <button 
+                                                    className={styles.deleteListBtn} 
+                                                    onClick={() => setExpendedDeleteListId(prevId => prevId === list.id ? null : list.id)}
+                                                >
+                                                    {t('delete')}
+                                                </button>
+                                                <button 
+                                                    className={styles.closeListBtn} 
+                                                    onClick={() => setExpandedListId(prevId => prevId === list.id ? null : list.id)}
+                                                >
+                                                    {t('close')}
+                                                </button>
                                             </>
                                         ) : (
                                             <>  
-                                            <p className={styles.deletionText}>{t('deleteQuestion')}</p>
+                                                <p className={styles.deletionText}>{t('deleteQuestion')}</p>
                                                 <button className={styles.confirmDeletionBtn} onClick={() => deleteList(list.id)}>{t('yes')}</button>
                                                 <button className={styles.cancelDeletionBtn} onClick={() => setExpendedDeleteListId(null)}>{t('no')}</button>
                                             </>
