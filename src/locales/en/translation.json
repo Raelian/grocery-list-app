@@ -28,5 +28,8 @@
     "none": "none",
     "unit": "Unit",
     "lbs": "lbs",
+    "oz": "oz",
+    "liter": "l",
+    "ml": "ml",
     "pcs": "pcs"
 }

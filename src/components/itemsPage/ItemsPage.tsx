@@ -164,6 +164,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         if(unit === "") return t('none');
         if(unit === "lbs") return t('lbs');
         if(unit === "pcs") return t('pcs');
+        if(unit === "oz") return t('oz');
         return unit;
     }
 
@@ -197,7 +198,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                         {item.name}
                                     </button>
                                     <p className={styles.itemQuantity}>
-                                        {item.quantity <= 0 ? "" : "x" + item.quantity}
+                                        {item.unit === "" ? "x" + item.quantity : item.quantity}
                                     </p>
                                     <p className={styles.itemQuantityType}>
                                         {(item.unit === "" || item.quantity === 0) ? "" : item.unit}

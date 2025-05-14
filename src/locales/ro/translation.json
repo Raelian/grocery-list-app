@@ -28,5 +28,8 @@
     "none": "fara",
     "unit": "Unitate",
     "lbs": "kg",
+    "oz": "g",
+    "liter": "l",
+    "ml": "ml",
     "pcs": "buc"
 }
