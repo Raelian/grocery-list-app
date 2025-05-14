@@ -2,7 +2,6 @@ import {useState, useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {GroceryList} from './types/grocery';
 import {loadLists, saveLists} from './utils/storage';
-import { useNavigate } from 'react-router-dom';
 import ListsPage from './components/listsPage/ListsPage';
 import ItemsPage from './components/itemsPage/ItemsPage';
 import ImportPage from './components/importPage/ImportPage';
@@ -10,7 +9,6 @@ import ImportPage from './components/importPage/ImportPage';
 function App() {
   const [lists, setLists] = useState<GroceryList[]>([])
   const [justImported, setJustImported] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -22,13 +20,6 @@ function App() {
 
     fetchLists();
   }, []); //empty dependency array means this runs once when the component is first rendered
-
-  useEffect(() => {
-    if(justImported) {
-      setJustImported(false);
-      navigate("/");
-    }
-  }, [justImported, navigate]);
 
   //delete list by id
   const deleteList = async (id: string) => {
@@ -69,7 +60,7 @@ function App() {
       <Routes>
         <Route path='/' element={<ListsPage lists={lists} deleteList={deleteList} addNewList={addNewList}/>} />
         <Route path='/lists/:id' element={<ItemsPage updateMainLists={updateMainLists}/>} />
-        <Route path='/import' element={<ImportPage addNewList={addNewList}/>}></Route>
+        <Route path='/import' element={<ImportPage addNewList={addNewList} justImported={justImported} setJustImported={setJustImported}/>}></Route>
       </Routes>
     </BrowserRouter>
   )

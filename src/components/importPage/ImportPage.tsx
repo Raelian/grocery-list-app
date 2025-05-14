@@ -7,9 +7,11 @@ import { useTranslation } from 'react-i18next';
 
 interface ImportPageProps {
   addNewList: (input: string | GroceryList) => Promise<void>;
+  justImported: boolean;
+  setJustImported: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ImportPage: React.FC<ImportPageProps> = ({ addNewList }) => {
+const ImportPage: React.FC<ImportPageProps> = ({ addNewList, justImported, setJustImported }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const {t} = useTranslation();
@@ -37,7 +39,14 @@ const ImportPage: React.FC<ImportPageProps> = ({ addNewList }) => {
 
     // Call the importList function to handle the import
     importList();
-  }, []); // Ensure these dependencies are correct to avoid unwanted loops
+  }, []);
+
+  useEffect(() => {
+    if(justImported) {
+      setJustImported(false);
+      navigate("/");
+    }
+  }, [justImported]);
 
   return <div className={styles.pageContainer}>
     <p>{t('importing')}</p>
