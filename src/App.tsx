@@ -28,7 +28,7 @@ function App() {
   }
 
   //add new list
-  const addNewList = async (input: string | GroceryList) => {
+  const addNewList = async (input: string | GroceryList, callback?: () => void) => {
       const newList: GroceryList = 
         typeof input === "string"
           ? {
@@ -44,6 +44,7 @@ function App() {
       const updatedLists = [...storedLists, newList];
       setLists(updatedLists); //update the state with the new list
       await saveLists(updatedLists); //save the new list to localforage
+      if(callback) callback();
   }
 
   //update list

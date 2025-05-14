@@ -30,7 +30,6 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
     const handleShare = (list: GroceryList) => {
         const shareUrl = generateShareUrl(list);
         navigator.clipboard.writeText(shareUrl);
-        alert("Share link copied to clipboard!");
     }
 
     //handle language change using i18n
