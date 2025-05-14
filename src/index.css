@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 :root {
   --color-bg: rgb(211, 211, 211);
   --color-element-1: rgb(248, 249, 249);
@@ -10,6 +11,7 @@
   --color-sticky-note: rgb(240, 230, 170);
   --color-toggle-info: rgb(130, 130, 100);
   --color-share: rgb(105, 120, 140);
+  --ff-inter: "Inter";
 }
 
 *,
@@ -21,6 +23,7 @@
 }
 
 html, body {
+  font-family: var(--ff-inter), sans-serif;
   font-size: 16px;
   min-width: 320px;
   min-height: 100dvh;

@@ -52,8 +52,6 @@ const ImportPage: React.FC<ImportPageProps> = ({ addNewList}) => {
         await addNewList(importedList);
       } catch (error) {
         console.error("Failed to decode or import list: ", error);
-      } finally {
-        setTimeout(() => navigate("/"), 5000);
       }
     };
 
