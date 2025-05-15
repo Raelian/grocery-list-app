@@ -30,22 +30,23 @@ function App() {
 
   //add new list
   const addNewList = async (input: string | GroceryList) => {
-      const newList: GroceryList = 
-        typeof input === "string"
-          ? {
-              id: Date.now().toString(),
-              name: input,
-              items: [],
-              creationDate: new Date().toISOString(),
-              lastModified: new Date().toISOString(),
-            }
-          : input;
-      
-      const storedLists = await loadLists();
-      const updatedLists = [...storedLists, newList];
-      setLists(updatedLists); //update the state with the new list
-      await saveLists(updatedLists); //save the new list to localforage
-      await fetchLists();
+    const storedLists = await loadLists();
+
+    let newList: GroceryList = 
+      typeof input === "string"
+        ? {
+            id: Date.now().toString(),
+            name: input,
+            items: [],
+            creationDate: new Date().toISOString(),
+            lastModified: new Date().toISOString(),
+          }
+        : input;
+    
+    const updatedLists = [...storedLists, newList];
+    setLists(updatedLists); //update the state with the new list
+    await saveLists(updatedLists); //save the new list to localforage
+    await fetchLists();
   }
 
   //update list

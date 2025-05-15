@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { GroceryItem, GroceryList } from "../../types/grocery";
+import {loadLists} from '../../utils/storage';
 import {decompressFromEncodedURIComponent} from "lz-string";
 import styles from "./ImportedPage.module.scss";
 import { useTranslation } from 'react-i18next';
@@ -31,6 +32,19 @@ const ImportPage: React.FC<ImportPageProps> = ({ addNewList}) => {
     );
   };
 
+  const checkForDuplicateId = (importedList: GroceryList, storedLists: GroceryList[]) => {
+    const isDuplicate = storedLists.some(list => list.id === importedList.id);
+
+    if(isDuplicate) {
+      return {
+        ...importedList,
+        id: Date.now().toString(),
+      };
+    }
+    
+    return importedList;
+  }
+
   useEffect(() => {
     const importList = async () => {
       const encodedData = new URLSearchParams(location.search).get('data');
@@ -48,8 +62,10 @@ const ImportPage: React.FC<ImportPageProps> = ({ addNewList}) => {
           throw new Error("Invalid list format!");
         }
 
+        const storedLists = await loadLists();
+        const finalList = checkForDuplicateId(importedList, storedLists);
         // Add imported list using addNewList from App.tsx
-        await addNewList(importedList);
+        await addNewList(finalList);
       } catch (error) {
         console.error("Failed to decode or import list: ", error);
       } finally {
