@@ -237,7 +237,7 @@
   min-width: 0;
   outline: none;
 }
-.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .itemRequiredMessage {
+.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .itemAlertMessage {
   font-size: 1.2rem;
   color: var(--color-cancel);
 }

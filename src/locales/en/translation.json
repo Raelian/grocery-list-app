@@ -24,6 +24,7 @@
     "placeholderItemName": "Insert new item name...",
     "placeholderQuantity": "Quantity",
     "listRequired": "List name missing!",
+    "nameTooLong": "Maximum limit of 28 letters!",
     "itemRequired": "Item name missing!",
     "unit": "Unit",
     "lbs": "lbs",

@@ -23,7 +23,8 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     const [unitType, setUnitType] = useState<Unit>("");
     const newItemInputRef = useRef<HTMLInputElement>(null);
     const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
-    const [itemAlertMessage, setItemAlertMessage] = useState<boolean>(false);
+    const [noItemNameAlertMessage, setNoItemNameAlertMessage] = useState<boolean>(false);
+    const [itemNameTooLongMessage, setItemNameTooLongMessage] = useState<boolean>(false);
 
     //reference for add new item input menu
     let newItemInputMenuRef = useRef<HTMLDivElement | null>(null);
@@ -111,9 +112,15 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     //confirms new item, checks if item name was added and turns value of "" into 1
     const confirmNewItem = (name: string, quantity: string, unit: Unit) => {
         if(name.length === 0) {
-            setItemAlertMessage(true);
+            setNoItemNameAlertMessage(true);
             return;
         }
+
+        if(name.length > 28) {
+            setItemNameTooLongMessage(true);
+            return
+        }
+
         if(quantity === "") quantity = "1";
 
         const newItem: GroceryItem = {
@@ -140,7 +147,8 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     const resetInput = () => {
         setInputItemName("");
         setInputQuantityValue("");
-        setItemAlertMessage(false);
+        setNoItemNameAlertMessage(false);
+        setItemNameTooLongMessage(false);
         setUnitType("");
     }
 
@@ -258,8 +266,11 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                 placeholder={t('placeholderItemName')}
                                 onChange={(e) => setInputItemName(e.target.value)}
                             />
-                            {itemAlertMessage && 
-                                <p className={styles.itemRequiredMessage}>{t('itemRequired')}</p>
+                            {noItemNameAlertMessage && 
+                                <p className={styles.itemAlertMessage}>{t('itemRequired')}</p>
+                            }
+                            {itemNameTooLongMessage &&
+                                <p className={styles.itemAlertMessage}>{t('nameTooLong')}</p>
                             }
                             <div className={styles.lowerNewItemInputContainer}>
                                 <input 

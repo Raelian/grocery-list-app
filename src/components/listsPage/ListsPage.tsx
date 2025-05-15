@@ -23,7 +23,8 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
     const [newListName, setNewListName] = useState('');
     const [infoVisibile, setInfoVisibility] = useState<boolean>(false);
     const newListInputRef = useRef<HTMLInputElement>(null);
-    const [listAlertMessage, setListAlertMessage] = useState<boolean>(false);
+    const [noListAlertMessage, setNoListAlertMessage] = useState<boolean>(false);
+    const [listNameTooLongAlertMessage, setListNameTooLongAlertMessage] = useState<boolean>(false);
     const {i18n, t} = useTranslation();
 
     //handle share list URL
@@ -72,18 +73,27 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
     //confirm making new list btn
     const confirmNewList = (input:string) => {
         if(input.length === 0) {
-            setListAlertMessage(true);
-        } else {
-            addNewList(input);
-            toggleInputingNewList();
-            setListAlertMessage(false);
+            setNoListAlertMessage(true);
+            return;
         }
+        
+        if(input.length > 28) {
+            setListNameTooLongAlertMessage(true);
+            return;
+        }
+
+        addNewList(input);
+        toggleInputingNewList();
+        setNoListAlertMessage(false);
+        setListNameTooLongAlertMessage(false);
+        
     }
 
     //cancel making new list btn
     const openNewListInput = () => {
         setNewListName('');
-        setListAlertMessage(false);
+        setNoListAlertMessage(false);
+        setListNameTooLongAlertMessage(false);
         toggleInputingNewList();
     }
 
@@ -203,7 +213,7 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
                                     type="text"
                                     value={newListName}
                                     placeholder={t('placeholderListName')}
-                                    maxLength={32}
+                                    maxLength={28}
                                     onChange={(e) => setNewListName(e.target.value)}
                                 />
                                 <button className={styles.confirmNewList} onClick={() => confirmNewList(cleanInput(newListName))}>
@@ -211,8 +221,12 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
                                 </button>
                                 <button className={styles.cancelNewListProcess} onClick={() => toggleInputingNewList()}>X</button>
                             </div>
-                        {listAlertMessage && 
-                            <p className={styles.listRequiredMessage}>{t('listRequired')}</p>
+                        {noListAlertMessage && 
+                            <p className={styles.alertMessage}>{t('listRequired')}</p>
+                        }
+
+                        {listNameTooLongAlertMessage &&
+                            <p className={styles.alertMessage}>{t('nameTooLong')}</p>
                         }
                         </>
                         ) : (

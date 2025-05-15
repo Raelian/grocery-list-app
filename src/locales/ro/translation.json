@@ -24,6 +24,7 @@
     "placeholderItemName": "Introduceti nume produs...",
     "placeholderQuantity": "Cantitate",
     "listRequired": "Lipseste numele listei!",
+    "nameTooLong": "Limita maxima de 28 de litere!",
     "itemRequired": "Lipseste numele produsului!",
     "unit": "Unitate",
     "lbs": "kg",
