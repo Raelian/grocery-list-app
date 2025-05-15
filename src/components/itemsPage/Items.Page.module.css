@@ -63,7 +63,6 @@
   background-color: var(--color-element-2);
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
   max-width: 100%;
 }
 .pageContainer .itemsPageMain ul li {
@@ -256,17 +255,6 @@
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .itemQuantityInput::-webkit-outer-spin-button, .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .itemQuantityInput::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .unitSelector {
-  height: 2rem;
-  padding: 0 4px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  box-shadow: 1px 1px 2px var(--color-element-2);
-  outline: none;
-}
-.pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .unitSelector option {
-  border-radius: inherit;
 }
 .pageContainer .itemsPageMain .addNewItemContainer .addNewItemInputContainer .lowerNewItemInputContainer .confirmNewItem {
   min-width: 2rem;

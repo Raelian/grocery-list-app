@@ -206,7 +206,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                         {item.name}
                                     </button>
                                     <p className={styles.itemQuantity}>
-                                        {item.unit === "" ? "x" + item.quantity : "- " + item.quantity}
+                                        {item.unit === "" ? "x " + item.quantity : "- " + item.quantity}
                                     </p>
                                     <p className={styles.itemQuantityType}>
                                         {item.unit === "" ? "" : item.unit}

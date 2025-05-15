@@ -214,19 +214,6 @@
                             margin: 0;
                         }
                     }
-
-                    .unitSelector {
-                        height: 2rem;
-                        padding: 0 4px;
-                        border-radius: 8px;
-                        font-size: 1.2rem;
-                        box-shadow: 1px 1px 2px var(--color-element-2);
-                        outline: none;
-
-                        option {
-                            border-radius: inherit;
-                        }
-                    }
     
                     .confirmNewItem {
                         @include small-btn(var(--color-element-1), var(--color-confirm));
