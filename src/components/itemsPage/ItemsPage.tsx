@@ -88,7 +88,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                 console.log("No operator match!");
         }
 
-        if(quantity === 999 && operator === 1) return;
+        if(quantity === 99 && operator === 1) return;
         if(quantity === 1 && operator === -1) return;
 
         const modifiedItems = updatedList.items.map((item) =>
@@ -152,8 +152,8 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         if(userInput === "" || convertedUserInput <= 0) {
             setInputQuantityValue("");
             return;
-        } else if (convertedUserInput > 999) {
-            setInputQuantityValue("999")
+        } else if (convertedUserInput > 99) {
+            setInputQuantityValue("99")
             return;
         }
 
@@ -209,7 +209,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                         {item.unit === "" ? "x " + item.quantity : "- " + item.quantity}
                                     </p>
                                     <p className={styles.itemQuantityType}>
-                                        {item.unit === "" ? "" : item.unit}
+                                        {item.unit === "" ? "" : t(item.unit)}
                                     </p>
                                 </div>
                                 <button 
@@ -252,7 +252,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                             <input 
                                 ref={newItemInputRef}
                                 type="text" 
-                                maxLength={32}
+                                maxLength={28}
                                 value={inputItemName}
                                 className={styles.itemNameInput} 
                                 placeholder={t('placeholderItemName')}
@@ -265,7 +265,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                 <input 
                                     type="number" 
                                     min="1" 
-                                    max="999" 
+                                    max="99" 
                                     value={inputQuantityValue} 
                                     className={styles.itemQuantityInput} 
                                     placeholder={t('placeholderQuantity')}

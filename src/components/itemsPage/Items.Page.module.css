@@ -84,6 +84,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.2rem;
 }
 .pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer {
   display: flex;
@@ -91,7 +92,8 @@
   justify-content: start;
   align-items: center;
   width: 100%;
-  gap: 0.5rem;
+  gap: inherit;
+  overflow: hidden;
 }
 .pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .itemCompletedToggle {
   justify-content: center;
@@ -134,11 +136,15 @@
   display: flex;
   justify-content: center;
   align-items: right;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .pageContainer .itemsPageMain ul li .itemTopContainer .itemInputContainer .itemQuantityType {
   height: 100%;
   font-size: 1.2rem;
   font-weight: bolder;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .pageContainer .itemsPageMain ul li .itemTopContainer .itemMenuToggleBtn {
   min-width: 2rem;
