@@ -1,10 +1,11 @@
-import {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {GroceryItem, GroceryList, units, Unit} from "../../types/grocery";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FaCheck, FaArrowLeft, FaPen} from 'react-icons/fa';
 import styles from './Items.Page.module.scss';
 import { cleanInput } from "../../utils/cleanInput";
 import {useTranslation} from 'react-i18next';
+import UnitSelector from "../unitSelector/UnitSelector";
 
 interface ItemsPageProps {
     updateMainLists: (newOriginalList: GroceryList) => Promise<void>;
@@ -42,7 +43,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         }
     }, []);
 
-    //handle input refernce when trying to add new list
+    //handle input reference when trying to add new list
     useEffect(() => {
         if(isInputingNewItem) {
             newItemInputRef.current?.focus();
@@ -159,13 +160,20 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         setInputQuantityValue(userInput);
     }
 
-    //translate map units
-    const translateFromMap = (unit: Unit) => {
-        if(unit === "") return t('none');
-        if(unit === "lbs") return t('lbs');
-        if(unit === "pcs") return t('pcs');
-        if(unit === "oz") return t('oz');
-        return unit;
+    //handles new items unit selection
+    const handleNewItemUnitType = (newUnit: Unit) => {
+        console.log(newUnit);
+        setUnitType(newUnit);
+    }
+
+    //handles existing item unit selection
+    const handleItemUnitType = (newUnit: Unit, itemId: string) => {
+        const modifiedItems = updatedList.items.map(item => 
+            item.id === itemId ? {...item, unit: newUnit} : item
+        );
+
+        const newList = {...updatedList, items: modifiedItems, lastModified: new Date().toISOString()};
+        updateStateAndMainList(newList);
     }
 
     return (
@@ -198,10 +206,10 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                         {item.name}
                                     </button>
                                     <p className={styles.itemQuantity}>
-                                        {item.unit === "" ? "x" + item.quantity : item.quantity}
+                                        {item.unit === "" ? "x" + item.quantity : "- " + item.quantity}
                                     </p>
                                     <p className={styles.itemQuantityType}>
-                                        {(item.unit === "" || item.quantity === 0) ? "" : item.unit}
+                                        {item.unit === "" ? "" : item.unit}
                                     </p>
                                 </div>
                                 <button 
@@ -213,9 +221,23 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                             </div>
                             {expandedItemId === item.id && (
                                 <div className={styles.itemBtnsContainer}>
-                                    <button className={styles.addOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "add")}>+</button>
-                                    <button className={styles.substractOneItemBtn} onClick={() => quantityOperation(item.id, item.quantity, "substract")}>-</button>
-                                    <button className={styles.deleteItemBtn} onClick={() => deleteItem(item.id)}>{t('delete')}</button>
+                                    <button 
+                                        className={styles.addOneItemBtn} 
+                                        onClick={() => quantityOperation(item.id, item.quantity, "add")}
+                                    >+</button>
+                                    <button 
+                                        className={styles.substractOneItemBtn} 
+                                        onClick={() => quantityOperation(item.id, item.quantity, "substract")}
+                                    >-</button>
+                                    <UnitSelector 
+                                        value={item.unit}
+                                        handleChange={(unit) => handleItemUnitType(unit, item.id)}
+                                        units={units}
+                                    />
+                                    <button 
+                                        className={styles.deleteItemBtn} 
+                                        onClick={() => deleteItem(item.id)}
+                                    >{t('delete')}</button>
                                 </div> 
                             )}
                         </li>
@@ -249,23 +271,18 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                     placeholder={t('placeholderQuantity')}
                                     onChange={(e) => handleQuantityInput(e, setInputQuantityValue)}
                                 />
-                                <select 
-                                    id="unit-select" 
+                                <UnitSelector 
                                     value={unitType}
-                                    className={styles.unitSelector}
-                                    onChange={(e) => setUnitType(e.target.value as Unit)}
-                                >   
-                                    <option value={t('unit')} disabled>{t('unit')}</option>
-                                    {units.map((unit) => (
-                                        <option key={unit}>{translateFromMap(unit)}</option>
-                                    ))}
-                                </select>
+                                    handleChange={handleNewItemUnitType}
+                                    units={units}
+                                />
                                 <button 
                                     className={styles.confirmNewItem} 
                                     onClick={() => confirmNewItem(
-                                        cleanInput(inputItemName), 
-                                        inputQuantityValue, 
-                                        String(unitType) === `${t('none')}` ? "" as Unit : unitType)
+                                            cleanInput(inputItemName), 
+                                            inputQuantityValue, 
+                                            unitType
+                                        )
                                     }>
                                         <FaCheck className={styles.confirmIcon}/>
                                 </button>

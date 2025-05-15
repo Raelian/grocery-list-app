@@ -15,6 +15,7 @@ function App() {
       setLists(loadedLists);
     }
   };
+  
   //fetch list on startup
   useEffect(() => {
     fetchLists();

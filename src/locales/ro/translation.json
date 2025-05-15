@@ -1,6 +1,6 @@
 {
     "lists": "Listele mele",
-    "info": "Info",
+    "info": "Detalii",
     "hide": "Ascunde",
     "close": "Inchide",
     "delete": "Sterge",
@@ -25,7 +25,6 @@
     "placeholderQuantity": "Cantitate",
     "listRequired": "Lipseste numele listei!",
     "itemRequired": "Lipseste numele produsului!",
-    "none": "fara",
     "unit": "Unitate",
     "lbs": "kg",
     "oz": "g",
