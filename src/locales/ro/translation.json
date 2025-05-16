@@ -27,9 +27,5 @@
     "nameTooLong": "Limita maxima de 28 de litere!",
     "itemRequired": "Lipseste numele produsului!",
     "unit": "Unitate",
-    "lbs": "kg",
-    "oz": "g",
-    "liter": "l",
-    "ml": "ml",
     "pcs": "buc"
 }

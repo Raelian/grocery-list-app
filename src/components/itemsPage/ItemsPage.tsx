@@ -89,7 +89,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                 console.log("No operator match!");
         }
 
-        if(quantity === 99 && operator === 1) return;
+        if(quantity === 999 && operator === 1) return;
         if(quantity === 1 && operator === -1) return;
 
         const modifiedItems = updatedList.items.map((item) =>
@@ -160,8 +160,8 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         if(userInput === "" || convertedUserInput <= 0) {
             setInputQuantityValue("");
             return;
-        } else if (convertedUserInput > 99) {
-            setInputQuantityValue("99")
+        } else if (convertedUserInput > 999) {
+            setInputQuantityValue("999")
             return;
         }
 
@@ -276,7 +276,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                 <input 
                                     type="number" 
                                     min="1" 
-                                    max="99" 
+                                    max="999" 
                                     value={inputQuantityValue} 
                                     className={styles.itemQuantityInput} 
                                     placeholder={t('placeholderQuantity')}

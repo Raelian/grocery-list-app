@@ -27,9 +27,5 @@
     "nameTooLong": "Maximum limit of 28 letters!",
     "itemRequired": "Item name missing!",
     "unit": "Unit",
-    "lbs": "lbs",
-    "oz": "oz",
-    "liter": "l",
-    "ml": "ml",
     "pcs": "pcs"
 }
