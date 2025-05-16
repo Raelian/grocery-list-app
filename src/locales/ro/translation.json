@@ -26,6 +26,8 @@
     "listRequired": "Lipseste numele listei!",
     "nameTooLong": "Limita maxima de 28 de litere!",
     "itemRequired": "Lipseste numele produsului!",
+    "maxLists": "Numarul maxim de liste este 10!",
+    "maxItems": "Numarul maxim de produse este 30!",
     "unit": "Unitate",
     "pcs": "buc"
 }

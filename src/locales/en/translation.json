@@ -26,6 +26,8 @@
     "listRequired": "List name missing!",
     "nameTooLong": "Maximum limit of 28 letters!",
     "itemRequired": "Item name missing!",
+    "maxLists": "Maximum number of lists is 10!",
+    "maxItems": "Maximum number of items is 30!",
     "unit": "Unit",
     "pcs": "pcs"
 }

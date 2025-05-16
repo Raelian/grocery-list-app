@@ -25,6 +25,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
     const [noItemNameAlertMessage, setNoItemNameAlertMessage] = useState<boolean>(false);
     const [itemNameTooLongMessage, setItemNameTooLongMessage] = useState<boolean>(false);
+    const [maxItemLimitReached, setMaxItemLimitReached] = useState<boolean>(false);
 
     //reference for add new item input menu
     let newItemInputMenuRef = useRef<HTMLDivElement | null>(null);
@@ -121,6 +122,11 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
             return
         }
 
+        if(list.items.length >= 30) {
+            setMaxItemLimitReached(true);
+            return;
+        }
+
         if(quantity === "") quantity = "1";
 
         const newItem: GroceryItem = {
@@ -149,6 +155,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         setInputQuantityValue("");
         setNoItemNameAlertMessage(false);
         setItemNameTooLongMessage(false);
+        setMaxItemLimitReached(false);
         setUnitType("");
     }
 
@@ -271,6 +278,9 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                             }
                             {itemNameTooLongMessage &&
                                 <p className={styles.itemAlertMessage}>{t('nameTooLong')}</p>
+                            }
+                            {maxItemLimitReached &&
+                                <p className={styles.itemAlertMessage}>{t('maxItems')}</p>
                             }
                             <div className={styles.lowerNewItemInputContainer}>
                                 <input 

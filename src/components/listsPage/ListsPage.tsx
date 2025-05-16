@@ -8,6 +8,7 @@ import { cleanInput } from '../../utils/cleanInput';
 import {useTranslation} from 'react-i18next';
 import {saveLanguage} from '../../utils/languageStorage';
 import { generateShareUrl } from '../../utils/share';
+import { loadLists } from '../../utils/storage';
 
 interface ListsPageProps {
     lists: GroceryList[];
@@ -25,6 +26,7 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
     const newListInputRef = useRef<HTMLInputElement>(null);
     const [noListAlertMessage, setNoListAlertMessage] = useState<boolean>(false);
     const [listNameTooLongAlertMessage, setListNameTooLongAlertMessage] = useState<boolean>(false);
+    const [maxListLimitReached, setMaxListLimitReached] = useState<boolean>(false);
     const {i18n, t} = useTranslation();
 
     //handle share list URL
@@ -71,7 +73,7 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
     }
 
     //confirm making new list btn
-    const confirmNewList = (input:string) => {
+    const confirmNewList = async (input:string) => {
         if(input.length === 0) {
             setNoListAlertMessage(true);
             return;
@@ -82,10 +84,18 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
             return;
         }
 
+        const storedLists = await loadLists();
+
+        if(storedLists.length >= 10) {
+            setMaxListLimitReached(true);
+            return;
+        }
+
         addNewList(input);
         toggleInputingNewList();
         setNoListAlertMessage(false);
         setListNameTooLongAlertMessage(false);
+        setMaxListLimitReached(false);
         
     }
 
@@ -94,6 +104,7 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
         setNewListName('');
         setNoListAlertMessage(false);
         setListNameTooLongAlertMessage(false);
+        setMaxListLimitReached(false);
         toggleInputingNewList();
     }
 
@@ -227,6 +238,10 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
 
                         {listNameTooLongAlertMessage &&
                             <p className={styles.alertMessage}>{t('nameTooLong')}</p>
+                        }
+
+                        {maxListLimitReached &&
+                            <p className={styles.alertMessage}>{t('maxLists')}</p>
                         }
                         </>
                         ) : (
