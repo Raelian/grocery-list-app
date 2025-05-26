@@ -1,10 +1,10 @@
-@mixin large-btn(){
-    height: 100%;
+@mixin large-btn($font-size: 2.2rem, $height: 3rem, $bg-color: var(--color-confirm)){
+    height: $height;
     width: 100%;
     justify-self: center;
     align-self: center;
-    font-size: 2.2rem;
-    background-color: var(--color-confirm);
+    font-size: $font-size;
+    background-color: $bg-color;
     color: var(--color-element-1);
     border: none;
     border-radius: 8px;

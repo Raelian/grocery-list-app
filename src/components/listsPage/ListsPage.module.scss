@@ -241,7 +241,7 @@
             }
 
             .addNewListBtn {
-                @include large-btn();
+                @include large-btn($font-size:1.2rem);
             }
         }
     }

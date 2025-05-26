@@ -1,4 +1,4 @@
-@mixin small-btn($color, $bg-color, $min-width: 2rem, $height: 2rem, $font-size: 1rem) {
+@mixin small-btn($color: var(--color-element-1), $bg-color, $min-width: 2rem, $height: 2rem, $font-size: 1rem) {
     min-width: $min-width;
     height: $height;
     border: none;

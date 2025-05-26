@@ -1,5 +1,7 @@
 {
     "lists": "My lists",
+    "addItem": "Add item",
+    "addList": "Add list",
     "info": "Info",
     "hide": "Hide",
     "close": "Close",
@@ -29,5 +31,11 @@
     "maxLists": "Maximum number of lists is 10!",
     "maxItems": "Maximum number of items is 30!",
     "unit": "Unit",
-    "pcs": "pcs"
+    "pcs": "pcs",
+    "recordItems": "Add items by voice",
+    "recordedTitle": "Recorded items",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "record": "Record",
+    "stop": "Stop"
 }

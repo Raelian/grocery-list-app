@@ -245,7 +245,7 @@ function ListsPage({lists, deleteList, addNewList}: ListsPageProps ) {
                         }
                         </>
                         ) : (
-                        <button className={styles.addNewListBtn} onClick={() => openNewListInput()}>+</button>
+                        <button className={styles.addNewListBtn} onClick={() => openNewListInput()}>{t('addList')}</button>
                     )}
                 </div>
             </main>

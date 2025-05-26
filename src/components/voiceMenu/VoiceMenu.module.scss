@@ -1,0 +1,61 @@
+@use '../../styles/buttons/SmallBtn.scss' as *;
+
+.voiceMenuContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg-transparent);
+    z-index: 999;
+
+    .voiceMenuSheet {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        max-width: 300px;
+        background-color: var(--color-element-1);
+        margin: .5rem auto;
+        padding: 1rem;
+        border-radius: 12px;
+
+        ul {
+            li {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                .deleteTempItemBtn {
+                    @include small-btn($bg-color: var(--color-cancel));
+                    margin-left: auto;
+                }
+            }
+        }
+
+        .voiceMenuBtnsContainer{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: .5rem;
+
+            .recordSpeechToggleBtn {
+                @include small-btn($bg-color: var(--color-add), $min-width: 100%);
+            }
+
+            .stop {
+                background-color: var(--color-substract);
+            }
+
+            .confirmSpeechItemsBtn {
+                @include small-btn($bg-color: var(--color-confirm));
+                flex: 1;
+            }
+
+            .exitSpeechMenuBtn {
+                @include small-btn($bg-color: var(--color-cancel));
+                flex: 1;
+            }
+        }
+    }
+}

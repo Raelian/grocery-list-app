@@ -5,6 +5,7 @@
 
 .pageContainer {
     @include page-container();
+    position: relative;
 
     .itemsPageHeader {
         display: flex;
@@ -169,8 +170,10 @@
         }
 
         .addNewItemContainer {
-            padding: 4px;
             background-color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
 
             .addNewItemInputContainer {
                 display: flex;
@@ -232,7 +235,16 @@
             }
 
             .addNewItemBtn {
-                @include large-btn();
+                @include large-btn($font-size: 1.2rem);
+            }
+
+            .openVoiceMenuBtn {
+                @include large-btn($font-size: 1.2rem, $bg-color: var(--color-share));
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: .5rem;
             }
         }
     }

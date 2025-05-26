@@ -1,0 +1,89 @@
+.voiceMenuContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-transparent);
+  z-index: 999;
+}
+.voiceMenuContainer .voiceMenuSheet {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 300px;
+  background-color: var(--color-element-1);
+  margin: 0.5rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+}
+.voiceMenuContainer .voiceMenuSheet ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.voiceMenuContainer .voiceMenuSheet ul li .deleteTempItemBtn {
+  min-width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-cancel);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.voiceMenuContainer .voiceMenuSheet .voiceMenuBtnsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.voiceMenuContainer .voiceMenuSheet .voiceMenuBtnsContainer .recordSpeechToggleBtn {
+  min-width: 100%;
+  height: 2rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-add);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+}
+.voiceMenuContainer .voiceMenuSheet .voiceMenuBtnsContainer .stop {
+  background-color: var(--color-substract);
+}
+.voiceMenuContainer .voiceMenuSheet .voiceMenuBtnsContainer .confirmSpeechItemsBtn {
+  min-width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-confirm);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+  flex: 1;
+}
+.voiceMenuContainer .voiceMenuSheet .voiceMenuBtnsContainer .exitSpeechMenuBtn {
+  min-width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: bolder;
+  border-radius: 6px;
+  color: var(--color-element-1);
+  background-color: var(--color-cancel);
+  box-shadow: 1px 1px 2px var(--color-element-2);
+  text-shadow: 1px 1px 2px var(--color-element-2);
+  flex-shrink: 0;
+  flex: 1;
+}/*# sourceMappingURL=VoiceMenu.module.css.map */

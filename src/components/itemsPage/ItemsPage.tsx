@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useRef} from "react";
 import {GroceryItem, GroceryList, units, Unit} from "../../types/grocery";
 import {useLocation, useNavigate} from "react-router-dom";
-import {FaCheck, FaArrowLeft, FaPen} from 'react-icons/fa';
+import {FaCheck, FaArrowLeft, FaPen, FaMicrophone} from 'react-icons/fa';
 import styles from './Items.Page.module.scss';
 import { cleanInput } from "../../utils/cleanInput";
 import {useTranslation} from 'react-i18next';
 import UnitSelector from "../unitSelector/UnitSelector";
+import VoiceMenu from "../voiceMenu/VoiceMenu";
 
 interface ItemsPageProps {
     updateMainLists: (newOriginalList: GroceryList) => Promise<void>;
@@ -18,6 +19,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
     const list = location.state.list as GroceryList;
     const [updatedList, setUpdatedList] = useState<GroceryList>(list);
     const [isInputingNewItem, setIfIsInputingNewItem] = useState<boolean>(false);
+    const [isVoiceInputMenuOpened, setIsVoiceInputMenuOpened] = useState<boolean>(false);
     const [inputQuantityValue, setInputQuantityValue] = useState<string>("");
     const [inputItemName, setInputItemName] = useState<string>("");
     const [unitType, setUnitType] = useState<Unit>("");
@@ -149,6 +151,11 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         toggleInputingNewItem();
     }
 
+    //open new voice menu
+    const handleVoiceMenuInput = () => {
+        setIsVoiceInputMenuOpened((prev) => prev = !prev);
+    }
+
     //resets input values on pressing confirm button
     const resetInput = () => {
         setInputItemName("");
@@ -177,7 +184,6 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
 
     //handles new items unit selection
     const handleNewItemUnitType = (newUnit: Unit) => {
-        console.log(newUnit);
         setUnitType(newUnit);
     }
 
@@ -314,9 +320,16 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                             </div> 
                         </div>
                     ) : (
-                        <button className={styles.addNewItemBtn} onClick={() => handleNewItemInput()}>+</button>
+                        <button className={styles.addNewItemBtn} onClick={() => handleNewItemInput()}>{t('addItem')}</button>
                     )}
+                    <button className={styles.openVoiceMenuBtn} onClick={() => handleVoiceMenuInput()}>
+                        <FaMicrophone />
+                        {t('recordItems')}
+                    </button>
                 </div>
+                {isVoiceInputMenuOpened && 
+                    <VoiceMenu handleVoiceMenuInput={handleVoiceMenuInput} />
+                }
             </main>
         </div>
     )

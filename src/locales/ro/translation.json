@@ -1,5 +1,7 @@
 {
     "lists": "Listele mele",
+    "addItem": "Adauga produs",
+    "addList": "Adauga lista",
     "info": "Detalii",
     "hide": "Ascunde",
     "close": "Inchide",
@@ -29,5 +31,11 @@
     "maxLists": "Numarul maxim de liste este 10!",
     "maxItems": "Numarul maxim de produse este 30!",
     "unit": "Unitate",
-    "pcs": "buc"
+    "pcs": "buc",
+    "recordItems": "Adauga produse prin voce",
+    "recordedTitle": "Produse inregistrate",
+    "confirm": "Confirma",
+    "cancel": "Anuleaza",
+    "record": "Inregistreaza",
+    "stop": "Opreste"
 }
