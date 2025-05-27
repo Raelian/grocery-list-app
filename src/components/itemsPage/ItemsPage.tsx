@@ -5,6 +5,7 @@ import {FaCheck, FaArrowLeft, FaPen, FaMicrophone} from 'react-icons/fa';
 import styles from './Items.Page.module.scss';
 import { cleanInput } from "../../utils/cleanInput";
 import {useTranslation} from 'react-i18next';
+import { TempItem } from "../../types/tempParserList";
 import UnitSelector from "../unitSelector/UnitSelector";
 import VoiceMenu from "../voiceMenu/VoiceMenu";
 
@@ -145,6 +146,22 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         resetInput();
     }
 
+    //add new list of item from input speech menu
+    const addNewSpeechItems = (speechList: TempItem[]) => {
+        const newItems: GroceryItem[] = (speechList as TempItem[]).map(([name, quantity, unit]) => ({
+            id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
+            name, quantity: Number(quantity),
+            checked: false,
+            unit: unit as Unit,
+        }))
+
+        const modifiedItems = [...updatedList.items, ...newItems];
+        const newList = {...updatedList, items: modifiedItems};
+
+        updateStateAndMainList(newList);
+        resetInput();
+    }
+
     //open new item input menu
     const handleNewItemInput = () => {
         resetInput();
@@ -227,7 +244,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                                         {item.name}
                                     </button>
                                     <p className={styles.itemQuantity}>
-                                        {item.unit === "" ? "x " + item.quantity : "- " + item.quantity}
+                                        {item.unit === "" || item.unit === undefined ? "x " + item.quantity : "- " + item.quantity}
                                     </p>
                                     <p className={styles.itemQuantityType}>
                                         {item.unit === "" ? "" : t(item.unit)}
@@ -328,7 +345,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
                     </button>
                 </div>
                 {isVoiceInputMenuOpened && 
-                    <VoiceMenu handleVoiceMenuInput={handleVoiceMenuInput} />
+                    <VoiceMenu handleVoiceMenuInput={handleVoiceMenuInput} addNewSpeechItems={addNewSpeechItems}/>
                 }
             </main>
         </div>

@@ -8,7 +8,7 @@ A simple, offline-first grocery and task list app with real-time sync, voice inp
 - ✅ Works offline (Progressive Web App)
 - 🔗 Share lists through a URL
 - 🖥️ Mobile-friendly
-- 🗣️ (Planned) Voice input for adding items in English & Romanian
+- 🗣️ Voice input for adding items in English & Romanian
 
 ## 🛠️ Tech Stack
 
@@ -28,6 +28,6 @@ src/
 
 - [x] Offline support with localStorage and localForage
 - [x] Share lists via encoded URL
-- [ ] Voice input with quantity + unit parsing by using Web Speech API (in progress)
+- [x] Voice input with quantity + unit parsing by using Web Speech API (work in progress)
 - [ ] Cloud sync with Firebase (better alternative to the shared lists via encoded URL)
 - [ ] Real-time collaboration

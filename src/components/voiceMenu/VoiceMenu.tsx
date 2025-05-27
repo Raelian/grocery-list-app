@@ -1,22 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./VoiceMenu.module.scss";
 import {useTranslation} from 'react-i18next';
+import { parseTranscript} from "../../utils/languageParserPicker";
+import { TempItem } from "../../types/tempParserList";
 
-type TempItem = [string, string?, string?];
 type recordState = 'record' | 'stop';
 
 interface VoiceMenuProp {
     handleVoiceMenuInput: () => void;
+    addNewSpeechItems: (list: TempItem[]) => void;
 }
 
-function VoiceMenu({handleVoiceMenuInput}: VoiceMenuProp) {
-    const { t } = useTranslation();
+function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
+    const { t, i18n } = useTranslation();
     const [recordingToggle, setRecordingToggle] = useState<recordState>('record');
-    const [tempItemsList, setTempItemList] = useState<TempItem[]>([
-        ["mere", "2", "kg"],
-        ["salam", "3"],
-        ["tort"]
-    ]);
+    const [tempItemsList, setTempItemList] = useState<TempItem[]>([]);
+    const recognitionRef = useRef<any>(null);
+    const langOption: Record<string, string> = {
+        en: 'en-US',
+        ro: 'ro-RO'
+    };
+
+    useEffect(() => {
+        //speech recognition API setup
+        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = langOption[i18n.language] || 'en-US';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognitionRef.current = recognition;
+
+        //parse recording
+        recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript.trim().toLowerCase();
+            console.log("Heard: ", transcript);
+            const lang = i18n.language;
+
+            const parsed: TempItem = parseTranscript(transcript, lang);
+            const [item, quantity = "1", unit] = parsed;
+            console.log("Item: ", item, "Quantity: ", quantity, "Unit: ", unit)
+            const key = `${item}-${quantity}-${unit || ""}`;
+
+            setTempItemList(prev => {
+                if (!prev.some(i => `${i[0]}-${i[1] || 1}-${i[2] || ""}` === key)) {
+                    return [...prev, [item, quantity, unit]];
+                }
+                return prev;
+            });
+        }
+
+        recognition.onerror = (event: any) => {
+            console.log('Speech recognition error: ', event.error);
+            setRecordingToggle('record');
+        }
+
+        recognition.onend = () => {
+            setRecordingToggle('record');
+        }
+
+        return () => {
+            recognition.stop(); // cleanup
+        };
+    }, [])
+    
 
     const deleteTempItem = (key: string) => {
         console.log(tempItemsList);
@@ -36,12 +84,22 @@ function VoiceMenu({handleVoiceMenuInput}: VoiceMenuProp) {
     }
 
     const confirmVoiceMenuList = () => {
-        //add confirm code here
+        addNewSpeechItems(tempItemsList);
+        handleVoiceMenuInput();
     }
 
+    //start/stop recording
     const handleVoiceRecording = () => {
-        recordingToggle === 'record' ? setRecordingToggle('stop') : setRecordingToggle('record');
-        //add voice recording code here
+        const recognition = recognitionRef.current;
+        if(!recognition) return;
+
+        if(recordingToggle === 'record') {
+            recognition.start();
+            setRecordingToggle('stop');
+        } else {
+            recognition.stop();
+            setRecordingToggle('record');
+        }
     }
 
     return (
@@ -55,7 +113,7 @@ function VoiceMenu({handleVoiceMenuInput}: VoiceMenuProp) {
 
                         return (
                             <li key={key}>
-                                {name} {quantity || 1 } {unit || ""}
+                                {name} {unit === undefined ? "x" : "-"} {quantity || 1 } {unit || ""}
                                 <button 
                                     className={styles.deleteTempItemBtn}
                                     onClick={() => deleteTempItem(key)}
