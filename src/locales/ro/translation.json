@@ -37,5 +37,13 @@
     "confirm": "Confirma",
     "cancel": "Anuleaza",
     "record": "Inregistreaza",
-    "stop": "Opreste"
+    "stop": "Opreste",
+    "speechInfo": "Detalii introducere vocala",
+    "useSpeechOption": "Apasa butonul Inregistreaza si vorbeste.",
+    "onlyChrome": "Optiunea vocala functioneaza doar in Google Chrome (sau pe Android).",
+    "speechExamples1": "Corect: 'trei kilograme de cartofi'",
+    "speechExamples2": "Corect: 'doua mere'",
+    "speechExamples3": "Corect: 'un tort'",
+    "speechExamples4": "Gresit: 'cartofi trei kilograme'",
+    "speechExamples5": "Gresit: 'lapte doi litrii'"
 }

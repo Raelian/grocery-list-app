@@ -19,6 +19,10 @@
         padding: 1rem;
         border-radius: 12px;
 
+        h3 {
+            text-align: center;
+        }
+
         ul {
             li {
                 display: flex;
@@ -30,6 +34,26 @@
                     @include small-btn($bg-color: var(--color-cancel));
                     margin-left: auto;
                 }
+            }
+        }
+
+        .detailsInfoContainer {
+            background-color: var(--color-bg);
+            border: 2px solid var(--color-element-2);
+            border-radius: 8px;
+            padding: .4rem;
+            font-size: 1rem;
+
+            h3 {
+                border-bottom: 2px solid var(--color-element-2);
+                width: 100%;
+                text-align: center;
+            }
+
+            > :nth-child(2),
+            > :nth-child(5),
+            > :nth-child(7) {
+                margin-bottom: .5rem;
             }
         }
 
@@ -45,6 +69,10 @@
 
             .stop {
                 background-color: var(--color-substract);
+            }
+
+            .speechMenuDetailsBtn {
+                @include small-btn($bg-color: var(--color-toggle-info), $min-width: 100%);
             }
 
             .confirmSpeechItemsBtn {

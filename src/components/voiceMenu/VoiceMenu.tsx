@@ -21,6 +21,7 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
         ro: 'ro-RO'
     };
     const recordingToggleRef = useRef<recordState>('record');
+    const [detailsInfoVisible, setDetailsInfoVisible] = useState<boolean>(false);
 
     useEffect(() => {
         recordingToggleRef.current = recordingToggle;
@@ -121,6 +122,10 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
         }
     }
 
+    const handleSpeechDetailsBtn = () => {
+        setDetailsInfoVisible((prev) => prev = !prev);
+    }
+
     return (
         <div className={styles.voiceMenuContainer}>
             <div className={styles.voiceMenuSheet}>
@@ -141,12 +146,30 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
                         );
                     })}
                 </ul>
+                { detailsInfoVisible && (
+                    <div className={styles.detailsInfoContainer}>
+                        <h3>{t('info')}</h3>
+                        <p>{t('useSpeechOption')}</p>
+                        <p>{t('speechExamples1')}</p>
+                        <p>{t('speechExamples2')}</p>
+                        <p>{t('speechExamples3')}</p>
+                        <p>{t('speechExamples4')}</p>
+                        <p>{t('speechExamples5')}</p>
+                        <p>{t('onlyChrome')}</p>
+                    </div>
+                    )}
                 <div className={styles.voiceMenuBtnsContainer}>
                     <button 
                         className={`${styles.recordSpeechToggleBtn} ${recordingToggle === 'stop' ? styles.stop : ""}`} 
                         onClick={() => handleVoiceRecording()}
                     >
                         {t(recordingToggle)}
+                    </button>
+                    <button 
+                        className={styles.speechMenuDetailsBtn}
+                        onClick={() => handleSpeechDetailsBtn()}
+                    >
+                        {t('speechInfo')}
                     </button>
                     <button 
                         className={styles.confirmSpeechItemsBtn} 

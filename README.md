@@ -8,7 +8,7 @@ A simple, offline-first grocery and task list app with real-time sync, voice inp
 - ✅ Works offline (Progressive Web App)
 - 🔗 Share lists through a URL
 - 🖥️ Mobile-friendly
-- 🗣️ Voice input for adding items in English & Romanian
+- 🗣️ Voice input for adding items in English & Romanian (Google Chrome only, therefore only works on Android)
 
 ## 🛠️ Tech Stack
 
