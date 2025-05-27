@@ -20,6 +20,11 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
         en: 'en-US',
         ro: 'ro-RO'
     };
+    const recordingToggleRef = useRef<recordState>('record');
+
+    useEffect(() => {
+        recordingToggleRef.current = recordingToggle;
+    }, [recordingToggle]);
 
     useEffect(() => {
         //speech recognition API setup
@@ -55,6 +60,11 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
             console.log('Speech recognition error: ', event.error);
             setRecordingToggle('record');
         }
+
+        recognition.onspeechend = () => {
+            console.log("Speech ended.");
+            recognition.stop(); // Force stop when speaking ends
+        };
 
         recognition.onend = () => {
             setRecordingToggle('record');
@@ -96,6 +106,15 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
         if(recordingToggle === 'record') {
             recognition.start();
             setRecordingToggle('stop');
+
+            //make sure it stops after a few seconds
+            setTimeout(() => {
+                if (recordingToggleRef.current === 'stop') {
+                    console.log("Force stopping recognition after timeout.");
+                    recognition.stop();
+                    setRecordingToggle('record');
+                }
+            }, 5000);
         } else {
             recognition.stop();
             setRecordingToggle('record');
