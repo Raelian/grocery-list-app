@@ -16,12 +16,15 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
     const [recordingToggle, setRecordingToggle] = useState<recordState>('record');
     const [tempItemsList, setTempItemList] = useState<TempItem[]>([]);
     const recognitionRef = useRef<any>(null);
+    const timeoutRef = useRef<number | null>(null);
     const langOption: Record<string, string> = {
         en: 'en-US',
         ro: 'ro-RO'
     };
     const recordingToggleRef = useRef<recordState>('record');
     const [detailsInfoVisible, setDetailsInfoVisible] = useState<boolean>(false);
+    const [isItemNameTooLong, setIsItemNameTooLong] = useState<boolean>(false);
+    const [isItemAlreadyOnList, setIsItemAlreadyOnList] = useState<boolean>(false);
 
     useEffect(() => {
         recordingToggleRef.current = recordingToggle;
@@ -47,12 +50,17 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
             const parsed: TempItem = parseTranscript(transcript, lang);
             const [item, quantity = "1", unit] = parsed;
             console.log("Item: ", item, "Quantity: ", quantity, "Unit: ", unit)
+            if(item.length > 28 || item === "") {
+                setIsItemNameTooLong(true);
+                return;
+            }
             const key = `${item}-${quantity}-${unit || ""}`;
 
             setTempItemList(prev => {
                 if (!prev.some(i => `${i[0]}-${i[1] || 1}-${i[2] || ""}` === key)) {
                     return [...prev, [item, quantity, unit]];
                 }
+                setIsItemAlreadyOnList(true);
                 return prev;
             });
         }
@@ -105,20 +113,34 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
         if(!recognition) return;
 
         if(recordingToggle === 'record') {
+            //clear previous timeout
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+
             recognition.start();
             setRecordingToggle('stop');
+            setIsItemNameTooLong(false);
+            setIsItemAlreadyOnList(false);
 
-            //make sure it stops after a few seconds
-            setTimeout(() => {
+            //new time out that makes sure it stops after a few seconds
+            timeoutRef.current = setTimeout(() => {
                 if (recordingToggleRef.current === 'stop') {
                     console.log("Force stopping recognition after timeout.");
                     recognition.stop();
                     setRecordingToggle('record');
                 }
-            }, 5000);
+            }, 4000);
         } else {
             recognition.stop();
             setRecordingToggle('record');
+
+            // Clear timeout if manually stopped otherwise shit stops after trying to speak a second time too quickly
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
         }
     }
 
@@ -137,7 +159,7 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
 
                         return (
                             <li key={key}>
-                                {name} {unit === undefined ? "x" : "-"} {quantity || 1 } {unit || ""}
+                                {name} {unit === undefined ? "x" : "-"} {quantity || 1 } {t(unit as string) || ""}
                                 <button 
                                     className={styles.deleteTempItemBtn}
                                     onClick={() => deleteTempItem(key)}
@@ -146,16 +168,23 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
                         );
                     })}
                 </ul>
+                {isItemNameTooLong && (
+                    <p className={styles.itemAlertMessage}>{t('nameTooLong')}</p>
+                )}
+                {isItemAlreadyOnList && (
+                    <p className={styles.itemAlertMessage}>{t('itemOnList')}</p>
+                )}
                 { detailsInfoVisible && (
                     <div className={styles.detailsInfoContainer}>
                         <h3>{t('info')}</h3>
                         <p>{t('useSpeechOption')}</p>
+                        <p>{t('speechExamples')}</p>
                         <p>{t('speechExamples1')}</p>
                         <p>{t('speechExamples2')}</p>
                         <p>{t('speechExamples3')}</p>
                         <p>{t('speechExamples4')}</p>
-                        <p>{t('speechExamples5')}</p>
                         <p>{t('onlyChrome')}</p>
+                        <p>{t('onlineOnly')}</p>
                     </div>
                     )}
                 <div className={styles.voiceMenuBtnsContainer}>

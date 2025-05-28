@@ -41,9 +41,11 @@
     "speechInfo": "Detalii introducere vocala",
     "useSpeechOption": "Apasa butonul Inregistreaza si vorbeste.",
     "onlyChrome": "Optiunea vocala functioneaza doar in Google Chrome (sau pe Android).",
-    "speechExamples1": "Corect: 'trei kilograme de cartofi'",
-    "speechExamples2": "Corect: 'doua mere'",
-    "speechExamples3": "Corect: 'un tort'",
-    "speechExamples4": "Gresit: 'cartofi trei kilograme'",
-    "speechExamples5": "Gresit: 'lapte doi litrii'"
+    "speechExamples": "Exemple:",
+    "speechExamples1": "- trei kilograme de cartofi",
+    "speechExamples2": "- doua mere",
+    "speechExamples3": "- un tort",
+    "speechExamples4": "- cartofi trei kilograme",
+    "onlineOnly": "Introducerea vocala necesita o conexiune la internet.",
+    "itemOnList": "Produs deja pe lista!"
 }

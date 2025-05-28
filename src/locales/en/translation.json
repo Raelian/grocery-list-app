@@ -41,9 +41,11 @@
     "speechInfo": "Voice input info",
     "useSpeechOption": "Press the Record button and speak.",
     "onlyChrome": "Speech option works only with Google Chrome (or Android).",
-    "speechExamples1": "Correct: 'three kilograms of potatoes'",
-    "speechExamples2": "Correct: 'two apples'",
-    "speechExamples3": "Correct: 'a cake'",
-    "speechExamples4": "Wrong: 'potatoes three kilograms'",
-    "speechExamples5": "Wrong: 'apples two'"
+    "speechExamples": "Examples:",
+    "speechExamples1": "- three kilograms of potatoes",
+    "speechExamples2": "- two apples",
+    "speechExamples3": "- a cake",
+    "speechExamples4": "- potatoes three kilograms",
+    "onlineOnly": "Speech input requires an internet connection.",
+    "itemOnList": "Item already on list!"
 }

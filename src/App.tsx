@@ -35,7 +35,7 @@ function App() {
     let newList: GroceryList = 
       typeof input === "string"
         ? {
-            id: Date.now().toString(),
+            id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
             name: input,
             items: [],
             creationDate: new Date().toISOString(),

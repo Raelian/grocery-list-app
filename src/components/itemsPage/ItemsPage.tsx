@@ -98,9 +98,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
 
         const modifiedItems = updatedList.items.map((item) =>
             item.id === id
-                ? {...item, 
-                    quantity: item.quantity + operator
-                }
+                ? {...item, quantity: item.quantity + operator}
                 : item
         )
 
@@ -133,7 +131,7 @@ function ItemsPage({updateMainLists}: ItemsPageProps) {
         if(quantity === "") quantity = "1";
 
         const newItem: GroceryItem = {
-            id: Date.now().toString(),
+            id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
             name: name,
             quantity: Number(quantity),
             checked: false,

@@ -1,6 +1,7 @@
 import React from "react";
 import {Unit} from "../../types/grocery";
 import styles from "./UnitSelector.module.scss";
+import { translateFromSelector } from "../../utils/translateUnits";
 import {useTranslation} from "react-i18next";
 
 interface UnitSelectorProps {
@@ -14,9 +15,7 @@ const UnitSelector: React.FC<UnitSelectorProps> = ({value, handleChange, units})
 
     //translate map units
     const translateFromMap = (unit: Unit) => {
-        if(unit === "lbs") return t('lbs');
         if(unit === "pcs") return t('pcs');
-        if(unit === "oz") return t('oz');
         return unit;
     }
 
@@ -28,7 +27,7 @@ const UnitSelector: React.FC<UnitSelectorProps> = ({value, handleChange, units})
         >   
             <option value={t('unit')} disabled>{t('unit')}</option>
             {units.map((unit) => (
-                <option key={unit}>{translateFromMap(unit)}</option>
+                <option key={unit}>{translateFromSelector(unit)}</option>
             ))}
         </select>
     );

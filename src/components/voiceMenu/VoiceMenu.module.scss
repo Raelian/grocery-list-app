@@ -37,6 +37,11 @@
             }
         }
 
+        .itemAlertMessage {
+            font-size: 1.2rem;
+            color: var(--color-cancel);
+        }
+
         .detailsInfoContainer {
             background-color: var(--color-bg);
             border: 2px solid var(--color-element-2);
@@ -51,8 +56,8 @@
             }
 
             > :nth-child(2),
-            > :nth-child(5),
-            > :nth-child(7) {
+            > :nth-child(7),
+            > :nth-child(8) {
                 margin-bottom: .5rem;
             }
         }
