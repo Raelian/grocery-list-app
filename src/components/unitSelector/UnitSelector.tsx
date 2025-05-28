@@ -13,12 +13,6 @@ interface UnitSelectorProps {
 const UnitSelector: React.FC<UnitSelectorProps> = ({value, handleChange, units}) => {
     const {t} = useTranslation();
 
-    //translate map units
-    const translateFromMap = (unit: Unit) => {
-        if(unit === "pcs") return t('pcs');
-        return unit;
-    }
-
     return (
         <select 
             value={value}
