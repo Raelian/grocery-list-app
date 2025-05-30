@@ -76,6 +76,10 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
         };
 
         recognition.onend = () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
             setRecordingToggle('record');
         }
 
