@@ -135,7 +135,7 @@ function VoiceMenu({handleVoiceMenuInput, addNewSpeechItems}: VoiceMenuProp) {
                     recognition.stop();
                     setRecordingToggle('record');
                 }
-            }, 4000);
+            }, 3000);
         } else {
             recognition.stop();
             setRecordingToggle('record');
